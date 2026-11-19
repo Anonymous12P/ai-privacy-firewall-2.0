@@ -84,9 +84,11 @@ def _dataset(
 def _binary_splits() -> PreprocessedSplitResult:
     """Create stable binary training, validation, and test partitions."""
     train_values = tuple(
-        (float(index % 3) / 10, float(index % 2) / 10)
-        if index < 20
-        else (1.0 + float(index % 3) / 10, 1.0 + float(index % 2) / 10)
+        (
+            (float(index % 3) / 10, float(index % 2) / 10)
+            if index < 20
+            else (1.0 + float(index % 3) / 10, 1.0 + float(index % 2) / 10)
+        )
         for index in range(40)
     )
     train_labels: tuple[MLLabel, ...] = ("normal",) * 20 + ("alert",) * 20

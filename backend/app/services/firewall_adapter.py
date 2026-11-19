@@ -64,7 +64,12 @@ class ScanToFirewallAdapter:
         return ScanResponse(
             scan_id=eval_response.evaluation_id,
             status="COMPLETED",
-            prediction=prediction or ("insider" if eval_response.decision in {"BLOCK", "RESTRICT"} else "normal"),
+            prediction=prediction
+            or (
+                "insider"
+                if eval_response.decision in {"BLOCK", "RESTRICT"}
+                else "normal"
+            ),
             confidence=eval_response.risk_score,
             risk_level=mapped_risk,  # type: ignore[arg-type]
             firewall_action=eval_response.decision,
