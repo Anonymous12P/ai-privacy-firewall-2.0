@@ -10,12 +10,11 @@ from app.datasets.profiler import DatasetProfiler
 from app.datasets.schemas import DatasetManifest
 from app.datasets.validator import DatasetValidator
 from app.preprocessing.cleaning_engine import CleaningEngine
-from app.preprocessing.cleaning_policy import CleaningPolicy
+from app.preprocessing.cleaning_policy import CleaningPolicy, PreprocessingConfig
 from app.preprocessing.config_loader import (
     load_cleaning_policy,
     load_preprocessing_config,
 )
-from app.preprocessing.cleaning_policy import PreprocessingConfig
 from app.preprocessing.exceptions import CleaningExecutionError
 from app.preprocessing.executor import CleaningExecutor
 from app.preprocessing.report import (
@@ -43,9 +42,12 @@ class DatasetPipeline:
         """Initialize the pipeline and load its declarative YAML policies."""
         if validator is not None and data_dir is not None:
             raise ValueError("Provide data_dir through DatasetValidator.")
-        if validator is not None and loader is not None:
-            if validator.loader is not loader:
-                raise ValueError("Pipeline loader and validator loader must match.")
+        if (
+            validator is not None
+            and loader is not None
+            and validator.loader is not loader
+        ):
+            raise ValueError("Pipeline loader and validator loader must match.")
 
         self.validator = validator or DatasetValidator(
             loader=loader,

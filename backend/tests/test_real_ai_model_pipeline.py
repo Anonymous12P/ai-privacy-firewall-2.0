@@ -12,6 +12,7 @@ Validates:
 from pathlib import Path
 
 import pytest
+
 from app.api.firewall import get_model_pipeline
 from app.core.config import get_settings
 from app.schemas.firewall import (

@@ -3,7 +3,7 @@
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from app.core.constants import APP_LOGGER_NAME
@@ -27,7 +27,7 @@ class CleaningExecutionSummary:
     warnings: tuple[str, ...] = ()
     json_report: Path | None = None
     markdown_report: Path | None = None
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 class CleaningReportGenerator:

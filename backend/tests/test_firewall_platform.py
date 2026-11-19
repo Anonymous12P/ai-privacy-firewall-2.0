@@ -16,6 +16,7 @@ from collections.abc import Mapping
 from typing import Any
 
 import pytest
+
 from app.api.firewall import (
     enforce_access,
     evaluate_access,

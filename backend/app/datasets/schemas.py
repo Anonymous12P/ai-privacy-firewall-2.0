@@ -1,7 +1,7 @@
 """Typed data contracts for dataset manifests and validation outcomes."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
@@ -44,7 +44,7 @@ class ValidationResult:
     warnings: tuple[ValidationIssue, ...]
     errors: tuple[ValidationIssue, ...]
     checked_files: tuple[Path, ...]
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 @dataclass(frozen=True)
 class ColumnProfile:
@@ -82,4 +82,4 @@ class ProfileReport:
     statistics: tuple[DatasetProfile, ...]
     warnings: tuple[str, ...]
     recommendations: tuple[str, ...]
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))

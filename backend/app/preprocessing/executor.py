@@ -10,7 +10,7 @@ import tempfile
 import time
 from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -23,8 +23,8 @@ from app.preprocessing.report import CleaningExecutionSummary
 from app.preprocessing.strategies import (
     ConstantMissingValueStrategy,
     DataFrameStrategy,
-    DuplicateRemovalStrategy,
     DropMissingValueStrategy,
+    DuplicateRemovalStrategy,
     IqrOutlierStrategy,
     MeanMissingValueStrategy,
     MedianMissingValueStrategy,
@@ -172,7 +172,7 @@ class CleaningExecutor:
             raise CleaningExecutionError(f"Input dataset file does not exist: {input_file}")
 
         started_at = time.perf_counter()
-        timestamp = datetime.now(timezone.utc)
+        timestamp = datetime.now(UTC)
         dataset_hash = self._sha256(input_file)
         output_name = (
             f"{self._safe_name(input_file.stem)}-{dataset_hash[:12]}.cleaned.csv"
