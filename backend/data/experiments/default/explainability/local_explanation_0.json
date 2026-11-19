@@ -1,0 +1,826 @@
+{
+  "expected_value": 5.169338226318359,
+  "explainer": "SHAP",
+  "feature_contributions": [
+    {
+      "absolute_contribution": 1.2456027269363403,
+      "contribution": 1.2456027269363403,
+      "feature_name": "indicator.usb",
+      "feature_value": 0.0,
+      "rank": 1
+    },
+    {
+      "absolute_contribution": 0.7985891699790955,
+      "contribution": 0.7985891699790955,
+      "feature_name": "behavioral_risk_index",
+      "feature_value": 35.003472,
+      "rank": 2
+    },
+    {
+      "absolute_contribution": 0.5641600489616394,
+      "contribution": 0.5641600489616394,
+      "feature_name": "component_score.session",
+      "feature_value": 37.013889,
+      "rank": 3
+    },
+    {
+      "absolute_contribution": 0.5332105755805969,
+      "contribution": 0.5332105755805969,
+      "feature_name": "categorical.subject_id==PSF0133",
+      "feature_value": 0.0,
+      "rank": 4
+    },
+    {
+      "absolute_contribution": 0.45597243309020996,
+      "contribution": 0.45597243309020996,
+      "feature_name": "indicator.login",
+      "feature_value": 0.5,
+      "rank": 5
+    },
+    {
+      "absolute_contribution": 0.22236904501914978,
+      "contribution": 0.22236904501914978,
+      "feature_name": "categorical.subject_id==MOS0047",
+      "feature_value": 0.0,
+      "rank": 6
+    },
+    {
+      "absolute_contribution": 0.2103896588087082,
+      "contribution": 0.2103896588087082,
+      "feature_name": "categorical.subject_id==EHD0584",
+      "feature_value": 0.0,
+      "rank": 7
+    },
+    {
+      "absolute_contribution": 0.1549312323331833,
+      "contribution": 0.1549312323331833,
+      "feature_name": "categorical.subject_id==IKR0401",
+      "feature_value": 0.0,
+      "rank": 8
+    },
+    {
+      "absolute_contribution": 0.11483516544103622,
+      "contribution": -0.11483516544103622,
+      "feature_name": "indicator.email",
+      "feature_value": 3.0,
+      "rank": 9
+    },
+    {
+      "absolute_contribution": 0.1034269779920578,
+      "contribution": 0.1034269779920578,
+      "feature_name": "categorical.subject_id==NWT0098",
+      "feature_value": 0.0,
+      "rank": 10
+    },
+    {
+      "absolute_contribution": 0.035273477435112,
+      "contribution": 0.035273477435112,
+      "feature_name": "categorical.subject_id==FSC0601",
+      "feature_value": 0.0,
+      "rank": 11
+    },
+    {
+      "absolute_contribution": 0.03314054384827614,
+      "contribution": 0.03314054384827614,
+      "feature_name": "indicator.session",
+      "feature_value": 10660.0,
+      "rank": 12
+    },
+    {
+      "absolute_contribution": 0.016978293657302856,
+      "contribution": -0.016978293657302856,
+      "feature_name": "indicator.file",
+      "feature_value": 0.0,
+      "rank": 13
+    },
+    {
+      "absolute_contribution": 0.009095809422433376,
+      "contribution": -0.009095809422433376,
+      "feature_name": "categorical.subject_id==MTB0620",
+      "feature_value": 0.0,
+      "rank": 14
+    },
+    {
+      "absolute_contribution": 0.004163564648479223,
+      "contribution": -0.004163564648479223,
+      "feature_name": "categorical.subject_id==EIS0041",
+      "feature_value": 0.0,
+      "rank": 15
+    },
+    {
+      "absolute_contribution": 0.004009895492345095,
+      "contribution": -0.004009895492345095,
+      "feature_name": "categorical.subject_id==CWR0502",
+      "feature_value": 0.0,
+      "rank": 16
+    },
+    {
+      "absolute_contribution": 0.0027715018950402737,
+      "contribution": -0.0027715018950402737,
+      "feature_name": "categorical.subject_id==MBJ0312",
+      "feature_value": 0.0,
+      "rank": 17
+    },
+    {
+      "absolute_contribution": 0.001344229793176055,
+      "contribution": -0.001344229793176055,
+      "feature_name": "categorical.subject_id==QJR0688",
+      "feature_value": 0.0,
+      "rank": 18
+    },
+    {
+      "absolute_contribution": 0.001242246711626649,
+      "contribution": -0.001242246711626649,
+      "feature_name": "categorical.subject_id==HVF0067",
+      "feature_value": 0.0,
+      "rank": 19
+    },
+    {
+      "absolute_contribution": 0.0010913758305832744,
+      "contribution": -0.0010913758305832744,
+      "feature_name": "categorical.subject_id==LBH0942",
+      "feature_value": 0.0,
+      "rank": 20
+    },
+    {
+      "absolute_contribution": 0.0005741590284742415,
+      "contribution": -0.0005741590284742415,
+      "feature_name": "categorical.subject_id==BVC0790",
+      "feature_value": 0.0,
+      "rank": 21
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AAS0442",
+      "feature_value": 1.0,
+      "rank": 22
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AHM0410",
+      "feature_value": 0.0,
+      "rank": 23
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AIH0675",
+      "feature_value": 0.0,
+      "rank": 24
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AIP0982",
+      "feature_value": 0.0,
+      "rank": 25
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AJC0840",
+      "feature_value": 0.0,
+      "rank": 26
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AKK0329",
+      "feature_value": 0.0,
+      "rank": 27
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==AKW0167",
+      "feature_value": 0.0,
+      "rank": 28
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==ARB0881",
+      "feature_value": 0.0,
+      "rank": 29
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==ASS0206",
+      "feature_value": 0.0,
+      "rank": 30
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==ASS0517",
+      "feature_value": 0.0,
+      "rank": 31
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BAJ0654",
+      "feature_value": 0.0,
+      "rank": 32
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BBG0325",
+      "feature_value": 0.0,
+      "rank": 33
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BBH0810",
+      "feature_value": 0.0,
+      "rank": 34
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BCM0653",
+      "feature_value": 0.0,
+      "rank": 35
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BDV0168",
+      "feature_value": 0.0,
+      "rank": 36
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BEC0505",
+      "feature_value": 0.0,
+      "rank": 37
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BJP0134",
+      "feature_value": 0.0,
+      "rank": 38
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==BQS0525",
+      "feature_value": 0.0,
+      "rank": 39
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CBG0490",
+      "feature_value": 0.0,
+      "rank": 40
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CCH0685",
+      "feature_value": 0.0,
+      "rank": 41
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CCM0467",
+      "feature_value": 0.0,
+      "rank": 42
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CKD0680",
+      "feature_value": 0.0,
+      "rank": 43
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CLS0296",
+      "feature_value": 0.0,
+      "rank": 44
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CQH0701",
+      "feature_value": 0.0,
+      "rank": 45
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CRP0456",
+      "feature_value": 0.0,
+      "rank": 46
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CSH0626",
+      "feature_value": 0.0,
+      "rank": 47
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CSL0949",
+      "feature_value": 0.0,
+      "rank": 48
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==CTR0341",
+      "feature_value": 0.0,
+      "rank": 49
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==DAR0885",
+      "feature_value": 0.0,
+      "rank": 50
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==DGF0443",
+      "feature_value": 0.0,
+      "rank": 51
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==DOL0332",
+      "feature_value": 0.0,
+      "rank": 52
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==DVW0103",
+      "feature_value": 0.0,
+      "rank": 53
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==EBC0390",
+      "feature_value": 0.0,
+      "rank": 54
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==FXF0957",
+      "feature_value": 0.0,
+      "rank": 55
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==GCC0744",
+      "feature_value": 0.0,
+      "rank": 56
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==GJT0386",
+      "feature_value": 0.0,
+      "rank": 57
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==GNS0178",
+      "feature_value": 0.0,
+      "rank": 58
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==GQF0659",
+      "feature_value": 0.0,
+      "rank": 59
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==GRM0868",
+      "feature_value": 0.0,
+      "rank": 60
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==HAC0282",
+      "feature_value": 0.0,
+      "rank": 61
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==HCC0344",
+      "feature_value": 0.0,
+      "rank": 62
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==HCL0651",
+      "feature_value": 0.0,
+      "rank": 63
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==HTF0641",
+      "feature_value": 0.0,
+      "rank": 64
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==IMB0481",
+      "feature_value": 0.0,
+      "rank": 65
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==IUY0279",
+      "feature_value": 0.0,
+      "rank": 66
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==JNJ0556",
+      "feature_value": 0.0,
+      "rank": 67
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==KES0729",
+      "feature_value": 0.0,
+      "rank": 68
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==KKS0119",
+      "feature_value": 0.0,
+      "rank": 69
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==KNB0022",
+      "feature_value": 0.0,
+      "rank": 70
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==KRL0062",
+      "feature_value": 0.0,
+      "rank": 71
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==LHL0309",
+      "feature_value": 0.0,
+      "rank": 72
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==LHN0151",
+      "feature_value": 0.0,
+      "rank": 73
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==LPC0492",
+      "feature_value": 0.0,
+      "rank": 74
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==LQC0479",
+      "feature_value": 0.0,
+      "rank": 75
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==MDH0686",
+      "feature_value": 0.0,
+      "rank": 76
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==MHG0244",
+      "feature_value": 0.0,
+      "rank": 77
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==MIC0726",
+      "feature_value": 0.0,
+      "rank": 78
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==MLD0755",
+      "feature_value": 0.0,
+      "rank": 79
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==NAB0801",
+      "feature_value": 0.0,
+      "rank": 80
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==NKH0807",
+      "feature_value": 0.0,
+      "rank": 81
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==NMB0972",
+      "feature_value": 0.0,
+      "rank": 82
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==NMG0766",
+      "feature_value": 0.0,
+      "rank": 83
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==ONW0083",
+      "feature_value": 0.0,
+      "rank": 84
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==PAD0773",
+      "feature_value": 0.0,
+      "rank": 85
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==PES0085",
+      "feature_value": 0.0,
+      "rank": 86
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==PEV0323",
+      "feature_value": 0.0,
+      "rank": 87
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==RAM0447",
+      "feature_value": 0.0,
+      "rank": 88
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==RRP0568",
+      "feature_value": 0.0,
+      "rank": 89
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==RSC0089",
+      "feature_value": 0.0,
+      "rank": 90
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==RTO0313",
+      "feature_value": 0.0,
+      "rank": 91
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SCB0534",
+      "feature_value": 0.0,
+      "rank": 92
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SDO0170",
+      "feature_value": 0.0,
+      "rank": 93
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SJF0094",
+      "feature_value": 0.0,
+      "rank": 94
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SMH0291",
+      "feature_value": 0.0,
+      "rank": 95
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SOF0808",
+      "feature_value": 0.0,
+      "rank": 96
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SSG0250",
+      "feature_value": 0.0,
+      "rank": 97
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==SSR0278",
+      "feature_value": 0.0,
+      "rank": 98
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==TET0621",
+      "feature_value": 0.0,
+      "rank": 99
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==TLH0648",
+      "feature_value": 0.0,
+      "rank": 100
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==VMJ0147",
+      "feature_value": 0.0,
+      "rank": 101
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==WBC0192",
+      "feature_value": 0.0,
+      "rank": 102
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==WKD0013",
+      "feature_value": 0.0,
+      "rank": 103
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==XHG0902",
+      "feature_value": 0.0,
+      "rank": 104
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==YCE0983",
+      "feature_value": 0.0,
+      "rank": 105
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==YIC0195",
+      "feature_value": 0.0,
+      "rank": 106
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.subject_id==ZCF0590",
+      "feature_value": 0.0,
+      "rank": 107
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "categorical.window==daily",
+      "feature_value": 1.0,
+      "rank": 108
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "component_score.email",
+      "feature_value": 3.0,
+      "rank": 109
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "component_score.file",
+      "feature_value": 0.0,
+      "rank": 110
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "component_score.http",
+      "feature_value": 0.0,
+      "rank": 111
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "component_score.login",
+      "feature_value": 100.0,
+      "rank": 112
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "component_score.usb",
+      "feature_value": 0.0,
+      "rank": 113
+    },
+    {
+      "absolute_contribution": 0.0,
+      "contribution": 0.0,
+      "feature_name": "indicator.http",
+      "feature_value": 0.0,
+      "rank": 114
+    }
+  ],
+  "metadata": {
+    "execution_time_seconds": 0.031618799999705516,
+    "expected_value": 5.169338226318359,
+    "explainer_type": "TreeExplainer",
+    "feature_count": 114,
+    "model_type": "XGBoost",
+    "predicted_class": "normal",
+    "prediction_probability": 0.9999147653579712,
+    "reports": {
+      "json": "C:\\Users\\pj211\\OneDrive\\Desktop\\AI Privacy Firewall\\backend\\data\\experiments\\default\\explainability\\local_explanation_0.json",
+      "markdown": "C:\\Users\\pj211\\OneDrive\\Desktop\\AI Privacy Firewall\\backend\\data\\experiments\\default\\explainability\\local_explanation_0.md"
+    },
+    "sample_count": 1,
+    "sample_index": 0,
+    "shap_version": "0.54.1",
+    "timestamp": "2026-11-01T18:41:16.858527+00:00"
+  },
+  "model_name": "XGBoost",
+  "predicted_class": "normal",
+  "prediction_probability": 0.9999147653579712,
+  "sample_index": 0,
+  "subject_id": "sample-0"
+}

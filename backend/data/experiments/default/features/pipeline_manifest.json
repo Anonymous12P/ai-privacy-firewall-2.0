@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "filename": "feature_metadata.json",
+      "sha256": "9976783523c20e451551919637c23a101635bf4a22a77ecc508776a4ca3ee6ac"
+    },
+    {
+      "filename": "feature_summary.md",
+      "sha256": "ec281df2d4bed5e7206c7a5723abffb8cc236254009f4d33842f0100d37089cf"
+    },
+    {
+      "filename": "features.csv",
+      "sha256": "6d214fe78968fe6784547fc810d49d2ab33e68b0c30532104ab48e00dde8cdcc"
+    },
+    {
+      "filename": "features.parquet",
+      "sha256": "861ebc847a8f05fbbb76047220e51ca8478022a71306b76d7c1ed4666257987b"
+    }
+  ],
+  "feature_count": 114,
+  "row_count": 33466,
+  "schema_version": 1
+}

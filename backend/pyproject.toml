@@ -6,11 +6,17 @@ build-backend = "setuptools.build_meta"
 name = "ai-privacy-firewall-backend"
 version = "0.1.0"
 description = "FastAPI scaffold for AI-Privacy-Firewall"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.13,<2.0",
+    "bcrypt>=3.1,<4.1",
     "fastapi",
+    "joblib>=1.4,<2.0",
     "pandas>=2.2,<4.0",
+    "passlib[bcrypt]>=1.7,<2.0",
+    "pyarrow>=19.0,<25.0",
+    "python-jose[cryptography]>=3.3,<4.0",
+    "scikit-learn>=1.7,<2.0",
     "pydantic-settings>=2.0,<3.0",
     "psycopg[binary]>=3.1,<4.0",
     "PyYAML>=6.0,<7.0",
@@ -21,6 +27,16 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "ruff>=0.11,<1.0",
+    "mypy>=1.15,<2.0",
+    "types-passlib",
+    "types-python-jose",
+]
+xgboost = [
+    "xgboost>=2.0,<4.0",
+]
+shap = [
+    "shap>=0.46,<1.0",
 ]
 
 [tool.pytest.ini_options]

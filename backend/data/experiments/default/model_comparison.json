@@ -1,0 +1,125 @@
+{
+  "best_model": "DecisionTree",
+  "chart_path": null,
+  "evaluation_partition": "test",
+  "models": [
+    {
+      "configuration": {
+        "ccp_alpha": 0.0,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": null,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "random_state": 42
+      },
+      "metrics": {
+        "accuracy": 0.9928286852589642,
+        "f1_score": 0.9930264495788915,
+        "log_loss": 0.23742722041755673,
+        "pr_auc": 0.9967750128701074,
+        "precision": 0.9932455013767745,
+        "recall": 0.9928286852589642,
+        "roc_auc": 0.762765154196456
+      },
+      "model_name": "DecisionTree",
+      "model_size_bytes": 40627,
+      "parameter_count": 3969,
+      "prediction_time_seconds": 1.2867820000101347,
+      "rank": 1,
+      "training_time_seconds": 7.289178999999422
+    },
+    {
+      "configuration": {
+        "bootstrap": true,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "n_estimators": 100,
+        "n_jobs": null,
+        "oob_score": false,
+        "random_state": 42
+      },
+      "metrics": {
+        "accuracy": 0.9932270916334661,
+        "f1_score": 0.9923538697130092,
+        "log_loss": 0.044107310264396925,
+        "pr_auc": 0.9991074048521935,
+        "precision": 0.9918460557768923,
+        "recall": 0.9932270916334661,
+        "roc_auc": 0.931083504400557
+      },
+      "model_name": "RandomForest",
+      "model_size_bytes": 4112387,
+      "parameter_count": 457704,
+      "prediction_time_seconds": 1.3039712999889161,
+      "rank": 2,
+      "training_time_seconds": 8.252577199993539
+    },
+    {
+      "configuration": {
+        "colsample_bytree": 1.0,
+        "eval_metric": null,
+        "gamma": 0.0,
+        "learning_rate": 0.1,
+        "max_depth": 6,
+        "min_child_weight": 1.0,
+        "n_estimators": 100,
+        "n_jobs": null,
+        "objective": "auto",
+        "random_state": 42,
+        "reg_alpha": 0.0,
+        "reg_lambda": 1.0,
+        "resolved_objective": "binary:logistic",
+        "subsample": 1.0,
+        "xgboost_version": "3.4.1"
+      },
+      "metrics": {
+        "accuracy": 0.9932270916334661,
+        "f1_score": 0.9913880655485664,
+        "log_loss": 0.02123387165197222,
+        "pr_auc": 0.9998382183838666,
+        "precision": 0.990864327122647,
+        "recall": 0.9932270916334661,
+        "roc_auc": 0.9781269908685495
+      },
+      "model_name": "XGBoost",
+      "model_size_bytes": 210579,
+      "parameter_count": 15136,
+      "prediction_time_seconds": 1.6258888000011211,
+      "rank": 3,
+      "training_time_seconds": 7.002963999999338
+    },
+    {
+      "configuration": {
+        "C": 1.0,
+        "class_weight": null,
+        "max_iter": 1000,
+        "multi_class": "auto",
+        "penalty": "l2",
+        "random_state": 42,
+        "solver": "lbfgs"
+      },
+      "metrics": {
+        "accuracy": 0.9932270916334661,
+        "f1_score": 0.9898521444901983,
+        "log_loss": 0.02269778731668339,
+        "pr_auc": 0.9997957430484872,
+        "precision": 0.9865000555546737,
+        "recall": 0.9932270916334661,
+        "roc_auc": 0.9718741889054059
+      },
+      "model_name": "LogisticRegression",
+      "model_size_bytes": 5849,
+      "parameter_count": 115,
+      "prediction_time_seconds": 1.3952329000021564,
+      "rank": 4,
+      "training_time_seconds": 22.28365450000274
+    }
+  ],
+  "primary_metric": "f1_score"
+}

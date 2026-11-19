@@ -1,4 +1,4 @@
-"""SQLAlchemy declarative base for future ORM models."""
+"""SQLAlchemy declarative base for application ORM models."""
 
 from sqlalchemy.orm import DeclarativeBase
 

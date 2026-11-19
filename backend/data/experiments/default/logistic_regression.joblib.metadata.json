@@ -1,0 +1,239 @@
+{
+  "configuration": {
+    "hyperparameters": {
+      "random_state": 42
+    },
+    "random_seed": 42,
+    "target_column": "insider"
+  },
+  "feature_count": 114,
+  "feature_names": [
+    "categorical.subject_id==AAS0442",
+    "categorical.subject_id==AHM0410",
+    "categorical.subject_id==AIH0675",
+    "categorical.subject_id==AIP0982",
+    "categorical.subject_id==AJC0840",
+    "categorical.subject_id==AKK0329",
+    "categorical.subject_id==AKW0167",
+    "categorical.subject_id==ARB0881",
+    "categorical.subject_id==ASS0206",
+    "categorical.subject_id==ASS0517",
+    "categorical.subject_id==BAJ0654",
+    "categorical.subject_id==BBG0325",
+    "categorical.subject_id==BBH0810",
+    "categorical.subject_id==BCM0653",
+    "categorical.subject_id==BDV0168",
+    "categorical.subject_id==BEC0505",
+    "categorical.subject_id==BJP0134",
+    "categorical.subject_id==BQS0525",
+    "categorical.subject_id==BVC0790",
+    "categorical.subject_id==CBG0490",
+    "categorical.subject_id==CCH0685",
+    "categorical.subject_id==CCM0467",
+    "categorical.subject_id==CKD0680",
+    "categorical.subject_id==CLS0296",
+    "categorical.subject_id==CQH0701",
+    "categorical.subject_id==CRP0456",
+    "categorical.subject_id==CSH0626",
+    "categorical.subject_id==CSL0949",
+    "categorical.subject_id==CTR0341",
+    "categorical.subject_id==CWR0502",
+    "categorical.subject_id==DAR0885",
+    "categorical.subject_id==DGF0443",
+    "categorical.subject_id==DOL0332",
+    "categorical.subject_id==DVW0103",
+    "categorical.subject_id==EBC0390",
+    "categorical.subject_id==EHD0584",
+    "categorical.subject_id==EIS0041",
+    "categorical.subject_id==FSC0601",
+    "categorical.subject_id==FXF0957",
+    "categorical.subject_id==GCC0744",
+    "categorical.subject_id==GJT0386",
+    "categorical.subject_id==GNS0178",
+    "categorical.subject_id==GQF0659",
+    "categorical.subject_id==GRM0868",
+    "categorical.subject_id==HAC0282",
+    "categorical.subject_id==HCC0344",
+    "categorical.subject_id==HCL0651",
+    "categorical.subject_id==HTF0641",
+    "categorical.subject_id==HVF0067",
+    "categorical.subject_id==IKR0401",
+    "categorical.subject_id==IMB0481",
+    "categorical.subject_id==IUY0279",
+    "categorical.subject_id==JNJ0556",
+    "categorical.subject_id==KES0729",
+    "categorical.subject_id==KKS0119",
+    "categorical.subject_id==KNB0022",
+    "categorical.subject_id==KRL0062",
+    "categorical.subject_id==LBH0942",
+    "categorical.subject_id==LHL0309",
+    "categorical.subject_id==LHN0151",
+    "categorical.subject_id==LPC0492",
+    "categorical.subject_id==LQC0479",
+    "categorical.subject_id==MBJ0312",
+    "categorical.subject_id==MDH0686",
+    "categorical.subject_id==MHG0244",
+    "categorical.subject_id==MIC0726",
+    "categorical.subject_id==MLD0755",
+    "categorical.subject_id==MOS0047",
+    "categorical.subject_id==MTB0620",
+    "categorical.subject_id==NAB0801",
+    "categorical.subject_id==NKH0807",
+    "categorical.subject_id==NMB0972",
+    "categorical.subject_id==NMG0766",
+    "categorical.subject_id==NWT0098",
+    "categorical.subject_id==ONW0083",
+    "categorical.subject_id==PAD0773",
+    "categorical.subject_id==PES0085",
+    "categorical.subject_id==PEV0323",
+    "categorical.subject_id==PSF0133",
+    "categorical.subject_id==QJR0688",
+    "categorical.subject_id==RAM0447",
+    "categorical.subject_id==RRP0568",
+    "categorical.subject_id==RSC0089",
+    "categorical.subject_id==RTO0313",
+    "categorical.subject_id==SCB0534",
+    "categorical.subject_id==SDO0170",
+    "categorical.subject_id==SJF0094",
+    "categorical.subject_id==SMH0291",
+    "categorical.subject_id==SOF0808",
+    "categorical.subject_id==SSG0250",
+    "categorical.subject_id==SSR0278",
+    "categorical.subject_id==TET0621",
+    "categorical.subject_id==TLH0648",
+    "categorical.subject_id==VMJ0147",
+    "categorical.subject_id==WBC0192",
+    "categorical.subject_id==WKD0013",
+    "categorical.subject_id==XHG0902",
+    "categorical.subject_id==YCE0983",
+    "categorical.subject_id==YIC0195",
+    "categorical.subject_id==ZCF0590",
+    "categorical.window==daily",
+    "indicator.email",
+    "indicator.file",
+    "indicator.http",
+    "indicator.login",
+    "indicator.session",
+    "indicator.usb",
+    "component_score.email",
+    "component_score.file",
+    "component_score.http",
+    "component_score.login",
+    "component_score.session",
+    "component_score.usb",
+    "behavioral_risk_index"
+  ],
+  "library_version": null,
+  "model_details": {},
+  "model_name": "LogisticRegression",
+  "sha256": "45f537c14bfc71983b03790bacd83c6a6556398df3b368869cae52f2ba396ae8",
+  "sklearn_version": "1.9.1",
+  "target_classes": [
+    "insider",
+    "normal"
+  ],
+  "test_metrics": {
+    "accuracy": 0.9932270916334661,
+    "class_labels": [
+      "insider",
+      "normal"
+    ],
+    "classification_report": {
+      "accuracy": 0.9932270916334661,
+      "insider": {
+        "f1-score": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 34.0
+      },
+      "macro avg": {
+        "f1-score": 0.49830101938836696,
+        "precision": 0.49661354581673306,
+        "recall": 0.5,
+        "support": 5020.0
+      },
+      "normal": {
+        "f1-score": 0.9966020387767339,
+        "precision": 0.9932270916334661,
+        "recall": 1.0,
+        "support": 4986.0
+      },
+      "weighted avg": {
+        "f1-score": 0.9898521444901983,
+        "precision": 0.9865000555546737,
+        "recall": 0.9932270916334661,
+        "support": 5020.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        34
+      ],
+      [
+        0,
+        4986
+      ]
+    ],
+    "evaluated_row_count": 5020,
+    "f1_score": 0.9898521444901983,
+    "log_loss": 0.02269778731668339,
+    "oob_score": null,
+    "pr_auc": 0.9997957430484872,
+    "precision": 0.9865000555546737,
+    "recall": 0.9932270916334661,
+    "roc_auc": 0.9718741889054059
+  },
+  "validation_metrics": {
+    "accuracy": 0.9932270916334661,
+    "class_labels": [
+      "insider",
+      "normal"
+    ],
+    "classification_report": {
+      "accuracy": 0.9932270916334661,
+      "insider": {
+        "f1-score": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 34.0
+      },
+      "macro avg": {
+        "f1-score": 0.49830101938836696,
+        "precision": 0.49661354581673306,
+        "recall": 0.5,
+        "support": 5020.0
+      },
+      "normal": {
+        "f1-score": 0.9966020387767339,
+        "precision": 0.9932270916334661,
+        "recall": 1.0,
+        "support": 4986.0
+      },
+      "weighted avg": {
+        "f1-score": 0.9898521444901983,
+        "precision": 0.9865000555546737,
+        "recall": 0.9932270916334661,
+        "support": 5020.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        34
+      ],
+      [
+        0,
+        4986
+      ]
+    ],
+    "evaluated_row_count": 5020,
+    "f1_score": 0.9898521444901983,
+    "log_loss": 0.025070821347358527,
+    "oob_score": null,
+    "pr_auc": 0.9994930976925115,
+    "precision": 0.9865000555546737,
+    "recall": 0.9932270916334661,
+    "roc_auc": 0.9437159340270403
+  }
+}

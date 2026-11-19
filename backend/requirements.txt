@@ -1,5 +1,8 @@
 fastapi
+bcrypt>=3.1,<4.1
 pandas>=2.2,<4.0
+passlib[bcrypt]>=1.7,<2.0
+python-jose[cryptography]>=3.3,<4.0
 alembic>=1.13,<2.0
 pydantic-settings>=2.0,<3.0
 psycopg[binary]>=3.1,<4.0

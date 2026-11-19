@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "filename": "experiment-features_train.csv",
+      "sha256": "396f49427d02e5ed557568342816218c218ff3538542dce72796bec046aceafd",
+      "size_bytes": 11179256
+    },
+    {
+      "filename": "experiment-features_train.parquet",
+      "sha256": "ea85d24619236f1fe42c1882f3318ab204c69d1c11c3b8cb76fe7b771febaa29",
+      "size_bytes": 331360
+    },
+    {
+      "filename": "experiment-features_validation.csv",
+      "sha256": "c9a2e44a32acf528b0ef3073ed9385fbf5c83cba1f9811c128e737c69b121cb5",
+      "size_bytes": 2398120
+    },
+    {
+      "filename": "experiment-features_validation.parquet",
+      "sha256": "756622a135f0fcc391f638fd19fa5814cac4790e60d591e6aab244688567ba4f",
+      "size_bytes": 108104
+    },
+    {
+      "filename": "experiment-features_test.csv",
+      "sha256": "0db2991d6be937a1a7707dc82ca9362ba4f144bbf86a7142921dd29e03d151d8",
+      "size_bytes": 2397487
+    },
+    {
+      "filename": "experiment-features_test.parquet",
+      "sha256": "9436bf17d01a5183bf312276f147a7029f214da19b32272c1024da379f9feefc",
+      "size_bytes": 106991
+    },
+    {
+      "filename": "ml_metadata.json",
+      "sha256": "2ec7ce5c5b0a7046c43128992fabc6aeec9d1304738871971b80ffd538eaa87d",
+      "size_bytes": 5010
+    },
+    {
+      "filename": "ml_summary.md",
+      "sha256": "b6122edcdb9141a9c9c92b4d876db68a5c1630f1e036b3f56b542d4ca3115c45",
+      "size_bytes": 960
+    }
+  ],
+  "dataset_name": "experiment-features",
+  "reproducibility_fingerprint": "0e333a7c1d69633519cd6d3793eea23a5310cd6580a5e2aa6921400375321fd6",
+  "schema_version": 1,
+  "source_sha256": "861ebc847a8f05fbbb76047220e51ca8478022a71306b76d7c1ed4666257987b"
+}

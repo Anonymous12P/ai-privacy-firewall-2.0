@@ -1,0 +1,6 @@
+import type { AdminExperiment } from '../types/api'
+import { Card } from './Card'
+
+export function ExperimentHistoryTable({ experiments }: { experiments: AdminExperiment[] }) {
+  return <Card><h2 className="font-semibold text-slate-900">Experiments</h2>{experiments.length === 0 ? <p className="mt-5 text-sm text-slate-500">No experiments found.</p> : <div className="mt-4 overflow-x-auto"><table className="w-full min-w-[720px] text-left text-sm"><thead className="text-xs uppercase tracking-wide text-slate-400"><tr><th className="py-3">Experiment</th><th className="py-3">Models</th><th className="py-3">Features</th><th className="py-3">Explainability</th><th className="py-3">Artifacts</th><th className="py-3">Output</th></tr></thead><tbody>{experiments.map((experiment) => <tr className="border-t border-slate-100" key={experiment.experiment_name}><td className="py-3 font-medium">{experiment.experiment_name}</td><td className="py-3">{experiment.selected_models.join(', ') || '—'}</td><td className="py-3">{experiment.feature_count ?? '—'}</td><td className="py-3">{experiment.explainability_enabled ? 'Enabled' : 'Disabled'}</td><td className="py-3">{experiment.generated_artifact_count}</td><td className="max-w-48 truncate py-3 text-xs text-slate-500">{experiment.output_directory}</td></tr>)}</tbody></table></div>}</Card>
+}
