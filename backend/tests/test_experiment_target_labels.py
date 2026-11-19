@@ -5,11 +5,12 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
+from pyarrow import parquet
+
 from app.experiments import CERTExperimentDatasetLoader, ExperimentPipeline
 from app.features.schemas import CERTDataset
 from app.ml.schemas import MLPipelineResult
 from app.models.schemas import ModelPipelineResult
-from pyarrow import parquet
 
 
 def _write_csv(

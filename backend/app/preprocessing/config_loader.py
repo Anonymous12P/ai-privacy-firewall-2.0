@@ -17,7 +17,7 @@ logger: logging.Logger = logging.getLogger(
 ModelT = TypeVar("ModelT", bound=BaseModel)
 
 
-def _load_model(path: Path, model_type: type[ModelT]) -> ModelT:
+def _load_model[ModelT: BaseModel](path: Path, model_type: type[ModelT]) -> ModelT:
     """Load one YAML mapping into a strict typed model."""
     config_path = path.expanduser().resolve()
     if not config_path.is_file():

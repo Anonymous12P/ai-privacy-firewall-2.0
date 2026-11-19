@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from collections.abc import Callable
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Literal
 
 import pandas as pd
+
 from app.preprocessing.cleaning_policy import (
     DuplicatePolicy,
     MissingValuePolicy,
@@ -227,7 +228,7 @@ def _numeric_parameter(
     """Read a finite numeric strategy parameter from a plan step."""
     value = dict(step.parameters).get(name, default)
     if isinstance(value, bool) or not isinstance(value, (int, float)):
-        raise ValueError(f"Strategy parameter {name!r} must be numeric.")
+        raise TypeError(f"Strategy parameter {name!r} must be numeric.")
     return float(value)
 
 
