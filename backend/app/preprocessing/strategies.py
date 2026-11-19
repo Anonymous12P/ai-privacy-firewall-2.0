@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from collections.abc import Callable
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Literal
 
 import pandas as pd
+
 from app.preprocessing.cleaning_policy import (
     DuplicatePolicy,
     MissingValuePolicy,
@@ -109,9 +110,9 @@ class ConstantMissingValueStrategy(DataFrameStrategy):
             raise ValueError("Constant missing-value strategy needs fill_value.")
         result = dataframe.copy()
         missing_count = int(result.loc[:, list(step.columns)].isna().sum().sum())
-        result.loc[:, list(step.columns)] = result.loc[
-            :, list(step.columns)
-        ].fillna(fill_value)
+        result.loc[:, list(step.columns)] = result.loc[:, list(step.columns)].fillna(
+            fill_value
+        )
         return result, missing_count
 
 
@@ -227,7 +228,7 @@ def _numeric_parameter(
     """Read a finite numeric strategy parameter from a plan step."""
     value = dict(step.parameters).get(name, default)
     if isinstance(value, bool) or not isinstance(value, (int, float)):
-        raise ValueError(f"Strategy parameter {name!r} must be numeric.")
+        raise TypeError(f"Strategy parameter {name!r} must be numeric.")
     return float(value)
 
 
@@ -254,9 +255,11 @@ def _apply_outlier_policy(
         outlier_masks[column] = (numeric < lower) | (numeric > upper)
 
     if strategy == "flag":
-        return result, int(
-            pd.concat(outlier_masks.values(), axis=1).any(axis=1).sum()
-        ) if outlier_masks else 0
+        return result, (
+            int(pd.concat(outlier_masks.values(), axis=1).any(axis=1).sum())
+            if outlier_masks
+            else 0
+        )
     if strategy == "drop":
         if not outlier_masks:
             return result, 0

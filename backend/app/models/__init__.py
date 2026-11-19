@@ -1,7 +1,5 @@
 """Public contracts for the future model-training module."""
 
-from app.models.orm import Scan, User
-
 from app.models.base import Model
 from app.models.comparison import (
     ModelComparisonEntry,
@@ -22,6 +20,7 @@ from app.models.exceptions import (
 )
 from app.models.factory import ModelFactory
 from app.models.logistic_regression import LogisticRegressionModel
+from app.models.orm import Scan, User
 from app.models.persistence import JoblibModelPersistence, ModelPersistence
 from app.models.pipeline import ModelPipeline, ModelTrainingPipeline
 from app.models.random_forest import RandomForestConfig, RandomForestModel
@@ -52,8 +51,6 @@ from app.models.trainer import (
 from app.models.xgboost_model import XGBoostConfig, XGBoostModel
 
 __all__ = [
-    "Scan",
-    "User",
     "ClassificationEvaluator",
     "ClassificationMetrics",
     "DecisionTreeConfig",
@@ -97,7 +94,9 @@ __all__ = [
     "RandomForestTrainer",
     "RankingConfig",
     "RankingMetric",
+    "Scan",
     "TrainingMetadata",
+    "User",
     "XGBoostConfig",
     "XGBoostModel",
     "XGBoostTrainer",

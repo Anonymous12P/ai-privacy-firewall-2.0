@@ -79,16 +79,18 @@ def rank_models(
         primary_key: tuple[int, float] = (
             (0, -main_score)
             if higher_is_better and main_score is not None
-            else (1, 0.0)
-            if higher_is_better
-            else (0, main_score)
-            if main_score is not None
-            else (1, 0.0)
+            else (
+                (1, 0.0)
+                if higher_is_better
+                else (0, main_score) if main_score is not None else (1, 0.0)
+            )
         )
         tie_keys = tuple(
-            _descending_metric_key(result.metrics, name)
-            if name in _HIGHER_IS_BETTER
-            else _ascending_value_key(getattr(result, name, None))
+            (
+                _descending_metric_key(result.metrics, name)
+                if name in _HIGHER_IS_BETTER
+                else _ascending_value_key(getattr(result, name, None))
+            )
             for name in _TIE_BREAKERS
         )
         return (

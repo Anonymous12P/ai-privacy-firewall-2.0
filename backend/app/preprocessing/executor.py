@@ -10,7 +10,7 @@ import tempfile
 import time
 from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -23,8 +23,8 @@ from app.preprocessing.report import CleaningExecutionSummary
 from app.preprocessing.strategies import (
     ConstantMissingValueStrategy,
     DataFrameStrategy,
-    DuplicateRemovalStrategy,
     DropMissingValueStrategy,
+    DuplicateRemovalStrategy,
     IqrOutlierStrategy,
     MeanMissingValueStrategy,
     MedianMissingValueStrategy,
@@ -32,9 +32,8 @@ from app.preprocessing.strategies import (
     ZScoreOutlierStrategy,
 )
 
-logger: logging.Logger = logging.getLogger(
-    f"{APP_LOGGER_NAME}.preprocessing.executor"
-)
+logger: logging.Logger = logging.getLogger(f"{APP_LOGGER_NAME}.preprocessing.executor")
+
 
 @dataclass(frozen=True)
 class _FileExecution:
@@ -86,9 +85,7 @@ class CleaningExecutor:
             or resolved_audit_dir == raw_root
             or resolved_audit_dir.is_relative_to(raw_root)
         ):
-            raise CleaningExecutionError(
-                f"Audit directory is unsafe: {audit_dir}"
-            )
+            raise CleaningExecutionError(f"Audit directory is unsafe: {audit_dir}")
 
         audits: list[CleaningAudit] = []
         outputs: list[Path] = []
@@ -169,10 +166,12 @@ class CleaningExecutor:
         """Transform a single CSV in memory, then atomically persist its copy."""
         input_file = input_path.expanduser().resolve()
         if not input_file.is_file():
-            raise CleaningExecutionError(f"Input dataset file does not exist: {input_file}")
+            raise CleaningExecutionError(
+                f"Input dataset file does not exist: {input_file}"
+            )
 
         started_at = time.perf_counter()
-        timestamp = datetime.now(timezone.utc)
+        timestamp = datetime.now(UTC)
         dataset_hash = self._sha256(input_file)
         output_name = (
             f"{self._safe_name(input_file.stem)}-{dataset_hash[:12]}.cleaned.csv"
@@ -276,21 +275,24 @@ class CleaningExecutor:
         if not isinstance(step, CleaningPlanStep):
             raise CleaningExecutionError("Cleaning plan contains an invalid step.")
         if step.stage == "missing_values":
-            strategy = {
-                "mean": MeanMissingValueStrategy,
-                "median": MedianMissingValueStrategy,
-                "mode": ModeMissingValueStrategy,
-                "constant": ConstantMissingValueStrategy,
-                "drop": DropMissingValueStrategy,
-            }.get(step.strategy)
-            if strategy is None:
+            if step.strategy == "mean":
+                strategy: DataFrameStrategy = MeanMissingValueStrategy()
+            elif step.strategy == "median":
+                strategy = MedianMissingValueStrategy()
+            elif step.strategy == "mode":
+                strategy = ModeMissingValueStrategy()
+            elif step.strategy == "constant":
+                strategy = ConstantMissingValueStrategy()
+            elif step.strategy == "drop":
+                strategy = DropMissingValueStrategy()
+            else:
                 raise CleaningExecutionError(
                     f"Unsupported missing-value strategy: {step.strategy}"
                 )
             columns = cls._available_columns(dataframe, step)
             if not columns:
                 return dataframe, 0
-            return strategy().apply(dataframe, cls._with_columns(step, columns))
+            return strategy.apply(dataframe, cls._with_columns(step, columns))
 
         if step.stage == "duplicates":
             if step.strategy not in {"keep_first", "keep_last", "drop"}:
@@ -313,9 +315,7 @@ class CleaningExecutor:
             elif method == "zscore":
                 strategy_type = ZScoreOutlierStrategy
             else:
-                raise CleaningExecutionError(
-                    f"Unsupported outlier method: {method}"
-                )
+                raise CleaningExecutionError(f"Unsupported outlier method: {method}")
             if step.strategy not in {"flag", "cap", "drop"}:
                 raise CleaningExecutionError(
                     f"Unsupported outlier strategy: {step.strategy}"

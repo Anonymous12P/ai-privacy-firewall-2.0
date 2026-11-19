@@ -215,7 +215,7 @@ class CERTCSVFeatureExtractor(FeatureExtractor):
         for timestamp_format in _TIMESTAMP_FORMATS:
             try:
                 # CERT source timestamps carry no timezone; preserve that.
-                return datetime.strptime(normalized, timestamp_format)  # noqa: DTZ007
+                return datetime.strptime(normalized, timestamp_format)
             except ValueError:
                 continue
         raise FeatureTimestampError(

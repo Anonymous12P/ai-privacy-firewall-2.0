@@ -258,9 +258,9 @@ class ClassBalancer(DatasetBalancer):
             MLRecord(
                 subject_id=f"smote-{index + 1:08d}",
                 values=tuple(float(value) for value in values),
-                label=label
-                if isinstance(label, (str, int, float, bool))
-                else str(label),
+                label=(
+                    label if isinstance(label, (str, int, float, bool)) else str(label)
+                ),
             )
             for index, (values, label) in enumerate(
                 zip(

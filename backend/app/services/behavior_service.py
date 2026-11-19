@@ -115,7 +115,9 @@ class BehaviorService:
 
         # Check contextual risks (e.g., off-hours or sensitive operations)
         if context_dict.get("off_hours") is True:
-            risk_factors.append("Off-hours access attempted outside authorized business hours")
+            risk_factors.append(
+                "Off-hours access attempted outside authorized business hours"
+            )
             weighted_score += 0.15
             total_weight += 0.15
 

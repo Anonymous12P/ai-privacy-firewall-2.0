@@ -252,7 +252,9 @@ def test_pipeline_handles_optional_insiders_file_outside_dataset_root(
     insider_record = next(
         record for record in result.files if "insiders.csv" in record.output_path
     )
-    assert insider_record.source_path.endswith("answers\\insiders.csv")
+    assert insider_record.source_path.replace("\\", "/").endswith(
+        "answers/insiders.csv"
+    )
     assert (tmp_path / "subset" / "answers" / "insiders.csv").is_file()
     assert result.selected_user_count == 4
 
