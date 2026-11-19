@@ -9,7 +9,7 @@ def configure_logging(log_level: str) -> logging.Logger:
     """Configure root logging and return the application logger."""
     level = getattr(logging, log_level.upper(), None)
     if not isinstance(level, int):
-        raise ValueError(f"Invalid logging level: {log_level}")
+        raise TypeError(f"Invalid logging level: {log_level}")
 
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
@@ -19,8 +19,8 @@ def configure_logging(log_level: str) -> logging.Logger:
         handler.setFormatter(logging.Formatter(LOG_FORMAT))
         root_logger.addHandler(handler)
     else:
-        for handler in root_logger.handlers:
-            handler.setFormatter(logging.Formatter(LOG_FORMAT))
-            handler.setLevel(level)
+        for existing_handler in root_logger.handlers:
+            existing_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+            existing_handler.setLevel(level)
 
     return logging.getLogger(APP_LOGGER_NAME)

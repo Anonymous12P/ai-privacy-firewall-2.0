@@ -208,7 +208,8 @@ class AIEngine:
                     name,
                     (
                         1.0
-                        if name == subject_feature or name == "categorical.window==daily"
+                        if name == subject_feature
+                        or name == "categorical.window==daily"
                         else 0.0
                     ),
                 )

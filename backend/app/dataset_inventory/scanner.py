@@ -234,10 +234,14 @@ class DatasetScanner:
             if not sample:
                 raise DatasetCSVError(f"CSV file is empty: {file_path}")
             try:
-                return csv.Sniffer().sniff(
-                    sample,
-                    delimiters=SUPPORTED_DELIMITERS,
-                ).delimiter
+                return (
+                    csv.Sniffer()
+                    .sniff(
+                        sample,
+                        delimiters=SUPPORTED_DELIMITERS,
+                    )
+                    .delimiter
+                )
             except csv.Error:
                 return ","
         except UnicodeError as exc:

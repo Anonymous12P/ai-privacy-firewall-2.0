@@ -465,7 +465,7 @@ def _parse_ground_truth_timestamp(
         "%Y-%m-%d",
     ):
         try:
-            return datetime.strptime(normalized, timestamp_format)  # noqa: DTZ007
+            return datetime.strptime(normalized, timestamp_format)
         except ValueError:
             continue
     raise ExperimentDatasetValidationError(

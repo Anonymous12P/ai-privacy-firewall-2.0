@@ -11,13 +11,11 @@ from app.core.constants import APP_LOGGER_NAME
 from app.preprocessing.cleaning_policy import CleaningPolicy, PreprocessingConfig
 from app.preprocessing.exceptions import PreprocessingConfigError
 
-logger: logging.Logger = logging.getLogger(
-    f"{APP_LOGGER_NAME}.preprocessing.config"
-)
+logger: logging.Logger = logging.getLogger(f"{APP_LOGGER_NAME}.preprocessing.config")
 ModelT = TypeVar("ModelT", bound=BaseModel)
 
 
-def _load_model(path: Path, model_type: type[ModelT]) -> ModelT:
+def _load_model[ModelT: BaseModel](path: Path, model_type: type[ModelT]) -> ModelT:
     """Load one YAML mapping into a strict typed model."""
     config_path = path.expanduser().resolve()
     if not config_path.is_file():

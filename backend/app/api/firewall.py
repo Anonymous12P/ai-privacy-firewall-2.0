@@ -165,4 +165,3 @@ def get_model_pipeline(
 ) -> FirewallModelPipelineResponse:
     """Return real ML model benchmarks, global SHAP attributions, and dataset metadata."""
     return service.get_model_pipeline()
-

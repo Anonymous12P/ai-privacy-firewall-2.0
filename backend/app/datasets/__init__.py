@@ -1,17 +1,17 @@
 """Public interfaces for the dataset architecture."""
 
-from app.datasets.loader import DatasetLoader
-from app.datasets.pipeline import DatasetPipeline
-from app.datasets.validator import DatasetValidator
 from app.datasets.exceptions import (
     DatasetDirectoryError,
     DatasetError,
     DatasetFileNotFoundError,
     DatasetPathError,
+    DatasetProfileError,
+    DatasetValidationError,
 )
+from app.datasets.loader import DatasetLoader
+from app.datasets.pipeline import DatasetPipeline
 from app.datasets.profiler import DatasetProfiler
 from app.datasets.report_generator import ProfileReportGenerator
-from app.datasets.exceptions import DatasetProfileError, DatasetValidationError
 from app.datasets.schemas import (
     ColumnProfile,
     DatasetManifest,
@@ -21,9 +21,11 @@ from app.datasets.schemas import (
     ValidationIssue,
     ValidationResult,
 )
+from app.datasets.validator import DatasetValidator
 
 # TODO: Expand the public API when concrete dataset requirements are defined.
 __all__: tuple[str, ...] = (
+    "ColumnProfile",
     "DatasetDirectoryError",
     "DatasetError",
     "DatasetFileNotFoundError",
@@ -35,9 +37,8 @@ __all__: tuple[str, ...] = (
     "DatasetProfileError",
     "DatasetProfiler",
     "DatasetSchema",
-    "DatasetValidator",
     "DatasetValidationError",
-    "ColumnProfile",
+    "DatasetValidator",
     "ProfileReport",
     "ProfileReportGenerator",
     "ValidationIssue",

@@ -11,8 +11,8 @@ from app.datasets import (
     DatasetPipeline,
     DatasetProfiler,
     DatasetValidationError,
-    ProfileReportGenerator,
     DatasetValidator,
+    ProfileReportGenerator,
 )
 
 
