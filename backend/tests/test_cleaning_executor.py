@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from datetime import UTC
 from pathlib import Path
 from typing import Literal
 
@@ -19,8 +20,8 @@ from app.preprocessing.report import (
 from app.preprocessing.strategies import (
     ConstantMissingValueStrategy,
     DataFrameStrategy,
-    DuplicateRemovalStrategy,
     DropMissingValueStrategy,
+    DuplicateRemovalStrategy,
     IqrOutlierStrategy,
     MeanMissingValueStrategy,
     MedianMissingValueStrategy,
@@ -33,7 +34,7 @@ def _step(
     stage: Literal["missing_values", "duplicates", "outliers"],
     strategy: str,
     columns: tuple[str, ...],
-    **parameters: str | int | float | bool | None,
+    **parameters: str | float | bool | None,
 ) -> CleaningPlanStep:
     """Create a simple typed plan step for strategy-focused tests."""
     return CleaningPlanStep(
@@ -209,12 +210,12 @@ def test_output_directory_cannot_be_raw(tmp_path: Path) -> None:
 
 def test_audit_and_execution_report_generation(tmp_path: Path) -> None:
     audit_path = tmp_path / "reports" / "audit.json"
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     from app.preprocessing.audit import CleaningAudit
 
     audit = CleaningAudit(
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.now(UTC),
         dataset_hash="a" * 64,
         input_file=Path("input.csv"),
         output_file=Path("output.csv"),

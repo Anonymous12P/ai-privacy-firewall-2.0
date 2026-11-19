@@ -60,9 +60,13 @@ class InMemoryAuditRepository:
         if subject_id is not None:
             filtered = [r for r in filtered if r.subject_id == subject_id]
         if action is not None:
-            filtered = [r for r in filtered if r.decision == action or r.action == action]
+            filtered = [
+                r for r in filtered if r.decision == action or r.action == action
+            ]
         if risk_level is not None:
-            filtered = [r for r in filtered if r.risk_level.lower() == risk_level.lower()]
+            filtered = [
+                r for r in filtered if r.risk_level.lower() == risk_level.lower()
+            ]
         if enforced_only is True:
             filtered = [r for r in filtered if r.enforced is True]
 

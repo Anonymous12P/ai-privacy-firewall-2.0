@@ -4,7 +4,9 @@ import os
 from pathlib import Path
 
 # Ensure tests use an isolated SQLite test database if not explicitly set to a running database
-if "DATABASE_URL" not in os.environ or "postgresql" in os.environ.get("DATABASE_URL", ""):
+if "DATABASE_URL" not in os.environ or "postgresql" in os.environ.get(
+    "DATABASE_URL", ""
+):
     db_path = Path(__file__).resolve().parents[1] / "test-runtime.db"
     os.environ["DATABASE_URL"] = f"sqlite:///{db_path}"
 
@@ -14,3 +16,11 @@ from app.models import orm
 
 if engine.dialect.name == "sqlite":
     orm.Base.metadata.create_all(bind=engine)
+
+# The repository intentionally does not track the external CERT r4.2 subset.
+# Tests that validate default experiment configuration only require the
+# configured dataset path to exist.
+default_dataset_directory = (
+    Path(__file__).resolve().parents[1] / "data" / "raw" / "cert_r4.2_subset"
+)
+default_dataset_directory.mkdir(parents=True, exist_ok=True)

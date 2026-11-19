@@ -137,9 +137,7 @@ def test_rank_models_handles_missing_scores_and_ascending_log_loss() -> None:
                 "log_loss": (
                     None
                     if entry.model_name == "missing"
-                    else 0.9
-                    if entry.model_name == "high-loss"
-                    else 0.2
+                    else 0.9 if entry.model_name == "high-loss" else 0.2
                 ),
             },
         )

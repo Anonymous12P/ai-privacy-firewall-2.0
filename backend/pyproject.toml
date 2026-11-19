@@ -26,11 +26,16 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "black>=26.3.1,<27.0",
+    "pandas-stubs",
     "pytest",
     "ruff>=0.11,<1.0",
     "mypy>=1.15,<2.0",
+    "shap>=0.46,<1.0",
+    "types-PyYAML",
     "types-passlib",
     "types-python-jose",
+    "xgboost>=2.0,<4.0",
 ]
 xgboost = [
     "xgboost>=2.0,<4.0",

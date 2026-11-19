@@ -145,7 +145,9 @@ class PolicyEngine:
             raise ValueError("confidence must be between 0 and 1.")
 
         # Extract reasons if not provided
-        resolved_reasons = tuple(reasons) if reasons is not None else self._feature_reasons(features)
+        resolved_reasons = (
+            tuple(reasons) if reasons is not None else self._feature_reasons(features)
+        )
 
         # Match confidence-based policies (ordered highest severity first)
         matched_rule: PolicyRule | None = None

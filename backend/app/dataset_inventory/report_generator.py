@@ -117,9 +117,7 @@ class DatasetReportGenerator:
             for column in file_record.columns:
                 column_files.setdefault(column, set()).add(file_record.relative_path)
         potential_join_keys = sorted(
-            column
-            for column, paths in column_files.items()
-            if len(paths) > 1
+            column for column, paths in column_files.items() if len(paths) > 1
         )
 
         lines = [
@@ -224,13 +222,10 @@ class DatasetReportGenerator:
             for item in statistics.files:
                 lines.append(f"### `{item.relative_path}`")
                 lines.append("")
-                lines.append(
-                    f"- Numeric: {', '.join(item.numeric_columns) or 'None'}"
-                )
+                lines.append(f"- Numeric: {', '.join(item.numeric_columns) or 'None'}")
                 lines.append(f"- Date: {', '.join(item.date_columns) or 'None'}")
                 lines.append(
-                    "- Categorical: "
-                    f"{', '.join(item.categorical_columns) or 'None'}"
+                    "- Categorical: " f"{', '.join(item.categorical_columns) or 'None'}"
                 )
                 lines.append("")
         else:
@@ -244,18 +239,14 @@ class DatasetReportGenerator:
                     f"`{column}`: {count}"
                     for column, count in item.missing_values.items()
                 )
-                lines.append(
-                    f"- `{item.relative_path}`: {missing or 'No columns'}"
-                )
+                lines.append(f"- `{item.relative_path}`: {missing or 'No columns'}")
         else:
             lines.append("No missing-value analysis available.")
 
         lines.extend(["", "## Duplicate Counts", ""])
         if statistics.files:
             for item in statistics.files:
-                lines.append(
-                    f"- `{item.relative_path}`: {item.duplicate_rows}"
-                )
+                lines.append(f"- `{item.relative_path}`: {item.duplicate_rows}")
         else:
             lines.append("No duplicate analysis available.")
 
