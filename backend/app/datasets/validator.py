@@ -35,9 +35,7 @@ class DatasetValidator:
         self.data_dir = (
             data_dir
             if data_dir is not None
-            else loader.data_dir
-            if loader is not None
-            else get_settings().raw_data_dir
+            else loader.data_dir if loader is not None else get_settings().raw_data_dir
         )
 
     def validate(self, manifest: DatasetManifest) -> ValidationResult:
@@ -107,9 +105,11 @@ class DatasetValidator:
             )
         )
         allowed_extensions = {
-            extension.casefold()
-            if extension.startswith(".")
-            else f".{extension.casefold()}"
+            (
+                extension.casefold()
+                if extension.startswith(".")
+                else f".{extension.casefold()}"
+            )
             for extension in manifest.allowed_extensions
         }
         if not allowed_extensions:

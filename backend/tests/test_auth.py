@@ -1,13 +1,14 @@
 """Tests for authentication utilities and API handlers."""
 
 import pytest
+from fastapi import HTTPException, status
+
 from app.api.auth import current_user, login, register
 from app.auth.dependencies import auth_service, get_current_user
 from app.auth.jwt import create_access_token
 from app.auth.password import hash_password, verify_password
 from app.schemas.auth import LoginRequest, RegisterRequest
 from app.services.auth_service import UserAlreadyExistsError
-from fastapi import HTTPException, status
 
 
 @pytest.fixture(autouse=True)

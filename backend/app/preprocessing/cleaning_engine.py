@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Literal
 
 from app.core.constants import APP_LOGGER_NAME
@@ -46,7 +46,7 @@ class CleaningPlan:
     steps: tuple[CleaningPlanStep, ...]
     profile_summary: tuple[tuple[str, int], ...]
     planning_only: Literal[True] = True
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 class CleaningEngine:
@@ -142,15 +142,9 @@ class CleaningEngine:
         configured = set(policy.missing_values.columns)
         for name in observed_columns:
             override = policy.columns.get(name)
-            column_policy = (
-                override.missing_values if override is not None else None
-            )
+            column_policy = override.missing_values if override is not None else None
             effective_policy = column_policy or policy.missing_values
-            if (
-                column_policy is None
-                and configured
-                and name not in configured
-            ):
+            if column_policy is None and configured and name not in configured:
                 continue
             if effective_policy.strategy == "report_only":
                 continue

@@ -6,6 +6,7 @@ import math
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Literal
 
 from app.core.constants import APP_LOGGER_NAME
 from app.datasets.exceptions import DatasetProfileError
@@ -65,7 +66,9 @@ class _ColumnAccumulator:
     def to_profile(self, name: str) -> ColumnProfile:
         """Create an immutable profile from accumulated cell statistics."""
         if self.distinct_values and self.numeric_only:
-            data_type = "integer" if self.integer_only else "float"
+            data_type: Literal["integer", "float", "string", "empty"] = (
+                "integer" if self.integer_only else "float"
+            )
             numeric_count = self.numeric_count
             minimum = self.minimum
             maximum = self.maximum
@@ -119,9 +122,7 @@ class DatasetProfiler:
 
         for file_path in files:
             if file_path.suffix.casefold() != ".csv":
-                warnings.append(
-                    f"Skipped non-CSV validated file: {file_path.name}"
-                )
+                warnings.append(f"Skipped non-CSV validated file: {file_path.name}")
                 continue
             logger.info("Dataset loaded for profiling: %s", file_path)
             try:
@@ -201,8 +202,7 @@ class DatasetProfiler:
             missing_values=missing_values,
             duplicate_rows=duplicate_rows,
             columns=tuple(
-                state.to_profile(name)
-                for state, name in zip(column_states, headers)
+                state.to_profile(name) for state, name in zip(column_states, headers)
             ),
         )
 

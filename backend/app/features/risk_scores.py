@@ -123,9 +123,11 @@ class BehavioralRiskConfig:
         normalized_extensions = tuple(
             sorted(
                 {
-                    extension.strip().casefold()
-                    if extension.strip().startswith(".")
-                    else f".{extension.strip().casefold()}"
+                    (
+                        extension.strip().casefold()
+                        if extension.strip().startswith(".")
+                        else f".{extension.strip().casefold()}"
+                    )
                     for extension in self.suspicious_extensions
                 }
             )

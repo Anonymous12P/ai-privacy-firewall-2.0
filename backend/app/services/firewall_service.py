@@ -108,7 +108,9 @@ class PrivacyFirewall:
 
     def enforce(self, decision: Any, *, enabled: bool) -> None:
         """Enforce a decision when policy enforcement is enabled."""
-        action = getattr(decision, "firewall_action", getattr(decision, "action", "ALLOW"))
+        action = getattr(
+            decision, "firewall_action", getattr(decision, "action", "ALLOW")
+        )
         if enabled and action == "BLOCK":
             logger.warning(
                 "Firewall blocked request: policy=%s reasons=%s",
@@ -119,7 +121,9 @@ class PrivacyFirewall:
 
     def notice(self, decision: Any) -> str | None:
         """Return user-facing warning or restriction notices."""
-        action = getattr(decision, "firewall_action", getattr(decision, "action", "ALLOW"))
+        action = getattr(
+            decision, "firewall_action", getattr(decision, "action", "ALLOW")
+        )
         if action == "WARN":
             return "Request allowed with an AI Privacy Firewall warning."
         if action == "RESTRICT":
@@ -432,7 +436,9 @@ class FirewallService:
             risk_level=risk_level,
             enforced_only=enforced_only,
         )
-        total_pages = max(1, (total_count + page_size - 1) // page_size) if total_count > 0 else 1
+        total_pages = (
+            max(1, (total_count + page_size - 1) // page_size) if total_count > 0 else 1
+        )
         return FirewallAuditResponse(
             items=list(records),
             total_count=total_count,
@@ -473,7 +479,9 @@ class FirewallService:
         """Return real model metadata, benchmarks, explainability, and dataset info."""
         model_dir = self.ai_engine.model_directory
         comparison_file = model_dir / "model_comparison.json"
-        global_shap_file = model_dir / "explainability" / "global_feature_importance.json"
+        global_shap_file = (
+            model_dir / "explainability" / "global_feature_importance.json"
+        )
         metadata_file = model_dir / "features" / "feature_metadata.json"
 
         # 1. Models & Benchmarks
@@ -500,8 +508,12 @@ class FirewallService:
                             log_loss=round(float(metrics.get("log_loss", 0.03)), 4),
                             parameter_count=int(m.get("parameter_count", 100)),
                             model_size_bytes=int(m.get("model_size_bytes", 10000)),
-                            training_time_seconds=round(float(m.get("training_time_seconds", 5.0)), 2),
-                            prediction_time_seconds=round(float(m.get("prediction_time_seconds", 1.0)), 2),
+                            training_time_seconds=round(
+                                float(m.get("training_time_seconds", 5.0)), 2
+                            ),
+                            prediction_time_seconds=round(
+                                float(m.get("prediction_time_seconds", 1.0)), 2
+                            ),
                             rank=int(m.get("rank", 1)),
                             configuration=m.get("configuration", {}),
                         )
@@ -557,7 +569,11 @@ class FirewallService:
                     training_time_seconds=7.00,
                     prediction_time_seconds=1.63,
                     rank=3,
-                    configuration={"n_estimators": 100, "learning_rate": 0.1, "random_state": 42},
+                    configuration={
+                        "n_estimators": 100,
+                        "learning_rate": 0.1,
+                        "random_state": 42,
+                    },
                 ),
                 ModelBenchmarkMetricsSchema(
                     model_name="LogisticRegression",
@@ -600,12 +616,22 @@ class FirewallService:
                     global_features.append(
                         GlobalFeatureImportanceSchema(
                             feature_name=fn,
-                            display_name=name_map.get(fn, fn.replace("categorical.subject_id==", "Subject ")),
-                            mean_absolute_shap_value=round(float(feat.get("mean_absolute_shap_value", 0.0)), 4),
-                            percentage_contribution=round(float(feat.get("percentage_contribution", 0.0)), 2),
+                            display_name=name_map.get(
+                                fn, fn.replace("categorical.subject_id==", "Subject ")
+                            ),
+                            mean_absolute_shap_value=round(
+                                float(feat.get("mean_absolute_shap_value", 0.0)), 4
+                            ),
+                            percentage_contribution=round(
+                                float(feat.get("percentage_contribution", 0.0)), 2
+                            ),
                             rank=int(feat.get("rank", len(global_features) + 1)),
-                            positive_contribution_count=int(feat.get("positive_contribution_count", 0)),
-                            negative_contribution_count=int(feat.get("negative_contribution_count", 0)),
+                            positive_contribution_count=int(
+                                feat.get("positive_contribution_count", 0)
+                            ),
+                            negative_contribution_count=int(
+                                feat.get("negative_contribution_count", 0)
+                            ),
                         )
                     )
             except (OSError, ValueError, KeyError, json.JSONDecodeError) as err:
@@ -684,7 +710,9 @@ class FirewallService:
                     dataset_version="r4.2 Subset Benchmark",
                     total_records=int(meta.get("aggregated_record_count", 33466)),
                     feature_dimensions=len(meta.get("feature_names", [])),
-                    source_record_counts=meta.get("source_record_counts", dataset_summary.source_record_counts),
+                    source_record_counts=meta.get(
+                        "source_record_counts", dataset_summary.source_record_counts
+                    ),
                     target_column=meta.get("target_column", "insider"),
                 )
             except (OSError, ValueError, KeyError, json.JSONDecodeError) as err:
@@ -745,4 +773,3 @@ class FirewallService:
             threshold_bands=threshold_bands,
             active_features=active_features,
         )
-
