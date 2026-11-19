@@ -7,7 +7,8 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.auth import direct_router, router as auth_router
+from app.api.auth import direct_router
+from app.api.auth import router as auth_router
 from app.api.health import router as health_router
 from app.api.router import router as api_router
 from app.api.router import v1_router

@@ -53,9 +53,7 @@ class DeterministicDatasetSplitter(DatasetSplitter):
         strategy = (
             selected_config.strategy
             if selected_config.stratify is None
-            else "stratified"
-            if selected_config.stratify
-            else "random"
+            else "stratified" if selected_config.stratify else "random"
         )
         if strategy == "stratified":
             assignments = self._stratified_assignments(dataset, ratios, selected_config)

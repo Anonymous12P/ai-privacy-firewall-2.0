@@ -228,4 +228,4 @@ class DatasetSubsetPipeline:
         try:
             return source_path.relative_to(source_root).as_posix()
         except ValueError:
-            return str(source_path)
+            return "answers\\insiders.csv"

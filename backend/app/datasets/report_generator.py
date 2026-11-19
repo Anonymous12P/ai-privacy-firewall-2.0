@@ -74,8 +74,10 @@ class ProfileReportGenerator:
                     f"- Missing values: {profile.missing_values}",
                     f"- Duplicate rows: {profile.duplicate_rows}",
                     "",
-                    "| Column | Type | Missing | Distinct | Count | Min | Max | Mean | "
-                    "Top values |",
+                    (
+                        "| Column | Type | Missing | Distinct | Count | Min | Max | Mean | "
+                        "Top values |"
+                    ),
                     "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
                 ]
             )

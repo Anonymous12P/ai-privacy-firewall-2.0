@@ -123,9 +123,7 @@ class FirewallEvaluationResponse(BaseModel):
         default=None,
         description="Target resource evaluated by the firewall.",
     )
-    action: str = Field(
-        description="Evaluated access action."
-    )
+    action: str = Field(description="Evaluated access action.")
     decision: FirewallAction = Field(
         description="Firewall policy decision (ALLOW, WARN, RESTRICT, BLOCK)."
     )
@@ -137,9 +135,7 @@ class FirewallEvaluationResponse(BaseModel):
         le=1.0,
         description="Calibrated threat score between 0.0 and 1.0.",
     )
-    policy_name: str = Field(
-        description="Name of the matching firewall policy rule."
-    )
+    policy_name: str = Field(description="Name of the matching firewall policy rule.")
     reasons: list[str] = Field(
         default_factory=list,
         description="Explanatory reasons justifying the decision.",
@@ -254,15 +250,9 @@ class FirewallStatusResponse(BaseModel):
     active_policies_count: int = Field(
         description="Number of active privacy firewall policies."
     )
-    total_evaluations: int = Field(
-        description="Cumulative access requests evaluated."
-    )
-    total_blocks: int = Field(
-        description="Cumulative access requests blocked."
-    )
-    total_warnings: int = Field(
-        description="Cumulative access requests warned."
-    )
+    total_evaluations: int = Field(description="Cumulative access requests evaluated.")
+    total_blocks: int = Field(description="Cumulative access requests blocked.")
+    total_warnings: int = Field(description="Cumulative access requests warned.")
     total_restrictions: int = Field(
         description="Cumulative access requests restricted."
     )
@@ -275,19 +265,43 @@ class ModelBenchmarkMetricsSchema(BaseModel):
     """Benchmark performance metrics for an evaluated machine learning classifier."""
 
     model_name: FirewallModelName = Field(description="Name of the model architecture.")
-    accuracy: float = Field(ge=0.0, le=1.0, description="Overall test classification accuracy.")
-    f1_score: float = Field(ge=0.0, le=1.0, description="Balanced harmonic mean of precision and recall.")
-    precision: float = Field(ge=0.0, le=1.0, description="Precision score on threat class.")
-    recall: float = Field(ge=0.0, le=1.0, description="Recall sensitivity on threat class.")
-    roc_auc: float = Field(ge=0.0, le=1.0, description="Receiver Operating Characteristic Area Under Curve.")
-    pr_auc: float = Field(ge=0.0, le=1.0, description="Precision-Recall Area Under Curve.")
+    accuracy: float = Field(
+        ge=0.0, le=1.0, description="Overall test classification accuracy."
+    )
+    f1_score: float = Field(
+        ge=0.0, le=1.0, description="Balanced harmonic mean of precision and recall."
+    )
+    precision: float = Field(
+        ge=0.0, le=1.0, description="Precision score on threat class."
+    )
+    recall: float = Field(
+        ge=0.0, le=1.0, description="Recall sensitivity on threat class."
+    )
+    roc_auc: float = Field(
+        ge=0.0,
+        le=1.0,
+        description="Receiver Operating Characteristic Area Under Curve.",
+    )
+    pr_auc: float = Field(
+        ge=0.0, le=1.0, description="Precision-Recall Area Under Curve."
+    )
     log_loss: float = Field(ge=0.0, description="Cross-entropy / log loss metric.")
-    parameter_count: int = Field(ge=0, description="Total learnable parameters / tree nodes.")
-    model_size_bytes: int = Field(ge=0, description="Serialized artifact size in bytes.")
-    training_time_seconds: float = Field(ge=0.0, description="Seconds taken to train the model.")
-    prediction_time_seconds: float = Field(ge=0.0, description="Seconds taken to evaluate test partition.")
+    parameter_count: int = Field(
+        ge=0, description="Total learnable parameters / tree nodes."
+    )
+    model_size_bytes: int = Field(
+        ge=0, description="Serialized artifact size in bytes."
+    )
+    training_time_seconds: float = Field(
+        ge=0.0, description="Seconds taken to train the model."
+    )
+    prediction_time_seconds: float = Field(
+        ge=0.0, description="Seconds taken to evaluate test partition."
+    )
     rank: int = Field(ge=1, description="Comparative performance rank.")
-    configuration: dict[str, Any] = Field(default_factory=dict, description="Hyperparameter settings.")
+    configuration: dict[str, Any] = Field(
+        default_factory=dict, description="Hyperparameter settings."
+    )
 
 
 class GlobalFeatureImportanceSchema(BaseModel):
@@ -295,11 +309,19 @@ class GlobalFeatureImportanceSchema(BaseModel):
 
     feature_name: str = Field(description="Raw indicator or encoded feature name.")
     display_name: str = Field(description="Human-readable feature label.")
-    mean_absolute_shap_value: float = Field(ge=0.0, description="Mean absolute SHAP impact |SHAP|.")
-    percentage_contribution: float = Field(ge=0.0, le=100.0, description="Percentage of global attribution.")
+    mean_absolute_shap_value: float = Field(
+        ge=0.0, description="Mean absolute SHAP impact |SHAP|."
+    )
+    percentage_contribution: float = Field(
+        ge=0.0, le=100.0, description="Percentage of global attribution."
+    )
     rank: int = Field(ge=1, description="Importance rank.")
-    positive_contribution_count: int = Field(default=0, description="Instances where feature raised risk.")
-    negative_contribution_count: int = Field(default=0, description="Instances where feature lowered risk.")
+    positive_contribution_count: int = Field(
+        default=0, description="Instances where feature raised risk."
+    )
+    negative_contribution_count: int = Field(
+        default=0, description="Instances where feature lowered risk."
+    )
 
 
 class DatasetSummarySchema(BaseModel):
@@ -307,10 +329,16 @@ class DatasetSummarySchema(BaseModel):
 
     dataset_name: str = Field(description="Name of benchmark dataset.")
     dataset_version: str = Field(description="Dataset release version.")
-    total_records: int = Field(ge=0, description="Total engineered records in feature matrix.")
+    total_records: int = Field(
+        ge=0, description="Total engineered records in feature matrix."
+    )
     feature_dimensions: int = Field(ge=1, description="Number of feature dimensions.")
-    source_record_counts: dict[str, int] = Field(default_factory=dict, description="Raw event source counts.")
-    target_column: str = Field(default="insider", description="Target classification label.")
+    source_record_counts: dict[str, int] = Field(
+        default_factory=dict, description="Raw event source counts."
+    )
+    target_column: str = Field(
+        default="insider", description="Target classification label."
+    )
 
 
 class ThresholdBandSchema(BaseModel):
@@ -327,11 +355,22 @@ class FirewallModelPipelineResponse(BaseModel):
     """Comprehensive metadata and benchmark state of the real AI model pipeline."""
 
     status: str = Field(description="Operational health of the model pipeline.")
-    champion_model: FirewallModelName = Field(description="Default production champion model.")
-    primary_metric: str = Field(default="f1_score", description="Optimization selection metric.")
-    models: list[ModelBenchmarkMetricsSchema] = Field(description="Trained model benchmark metrics.")
-    global_features: list[GlobalFeatureImportanceSchema] = Field(description="Top global SHAP feature importances.")
+    champion_model: FirewallModelName = Field(
+        description="Default production champion model."
+    )
+    primary_metric: str = Field(
+        default="f1_score", description="Optimization selection metric."
+    )
+    models: list[ModelBenchmarkMetricsSchema] = Field(
+        description="Trained model benchmark metrics."
+    )
+    global_features: list[GlobalFeatureImportanceSchema] = Field(
+        description="Top global SHAP feature importances."
+    )
     dataset: DatasetSummarySchema = Field(description="Training dataset metadata.")
-    threshold_bands: list[ThresholdBandSchema] = Field(description="Firewall decision calibration bands.")
-    active_features: list[str] = Field(description="Feature names exposed by the champion model.")
-
+    threshold_bands: list[ThresholdBandSchema] = Field(
+        description="Firewall decision calibration bands."
+    )
+    active_features: list[str] = Field(
+        description="Feature names exposed by the champion model."
+    )

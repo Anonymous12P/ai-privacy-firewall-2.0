@@ -7,6 +7,7 @@ from typing import cast
 from unittest.mock import Mock
 
 import pytest
+
 from app.experiments import __main__ as experiment_cli
 from app.experiments.config import ExperimentConfig
 from app.experiments.exceptions import ExperimentExecutionError
