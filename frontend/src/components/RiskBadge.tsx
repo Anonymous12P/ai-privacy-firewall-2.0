@@ -1,6 +1,7 @@
 const styles: Record<string, string> = {
   low: 'bg-emerald-50 text-emerald-700 border-emerald-200/90',
-  medium: 'bg-amber-50 text-amber-800 border-amber-200/90',
+  medium: 'bg-yellow-50 text-yellow-800 border-yellow-200/90',
+  elevated: 'bg-amber-50 text-amber-800 border-amber-200/90',
   high: 'bg-orange-50 text-orange-800 border-orange-200/90',
   critical: 'bg-rose-50 text-rose-700 border-rose-200/90',
 }

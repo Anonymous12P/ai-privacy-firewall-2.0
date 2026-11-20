@@ -1,14 +1,23 @@
 import type { FirewallAction } from './api'
 
 export type OrgDepartment =
-  | 'Security Operations'
   | 'Engineering'
+  | 'Security'
+  | 'HR'
+  | 'Finance'
+  | 'Legal'
+  | 'Marketing'
+  | 'DevOps'
   | 'Infrastructure'
+  | 'Cloud'
+  | 'SOC'
   | 'Threat Intelligence'
+  | 'AI Research'
+  | 'Compliance'
+  | 'Security Operations'
   | 'Data Privacy & Compliance'
   | 'Identity & Access Management'
   | 'Cloud Operations'
-  | 'Finance'
   | 'Human Resources'
   | 'Healthcare'
 
@@ -21,10 +30,11 @@ export type OrgEmployeeName =
   | 'Pratik Akkanawaru'
   | 'Saurabh Talape'
   | 'Ram Rajurkar'
+  | string
 
 export interface EmployeeProfile {
   id: string
-  name: OrgEmployeeName
+  name: string
   role: string
   designation: string
   department: OrgDepartment
@@ -38,7 +48,7 @@ export interface EmployeeProfile {
   lastLogin: string
   riskScore: number
   behaviorScore: number
-  riskLevel: 'Low' | 'Medium' | 'High' | 'Critical'
+  riskLevel: 'Low' | 'Medium' | 'Elevated' | 'High' | 'Critical'
   mfaEnabled: boolean
   currentSession?: string
   behaviorTimeline: {

@@ -55,7 +55,9 @@ class DatasetLoader:
             or relative_path.is_absolute()
             or relative_path.name in {"", ".", ".."}
         ):
-            raise DatasetPathError("Dataset filename must be a non-empty relative path.")
+            raise DatasetPathError(
+                "Dataset filename must be a non-empty relative path."
+            )
 
         resolved_path = (self.data_dir / relative_path).resolve()
         if not resolved_path.is_relative_to(self.data_dir):

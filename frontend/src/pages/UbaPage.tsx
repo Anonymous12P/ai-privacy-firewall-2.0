@@ -24,6 +24,7 @@ import { MetricCard } from '../components/MetricCard'
 import { RiskBadge } from '../components/RiskBadge'
 import { EMPLOYEES } from '../data/organizationData'
 import type { EmployeeProfile } from '../types/organization'
+import { formatThreatScore } from '../utils/threatScore'
 
 const FEATURE_IMPORTANCE_DATA = [
   { feature: 'removable_usb_attached', importance: 32, category: 'Hardware' },
@@ -99,7 +100,7 @@ export function UbaPage() {
           >
             {EMPLOYEES.map((emp) => (
               <option key={emp.id} value={emp.id}>
-                {emp.name} ({emp.department} - Score: {(emp.riskScore * 100).toFixed(0)}%)
+                {emp.name} ({emp.department} - Threat: {formatThreatScore(emp.riskScore)})
               </option>
             ))}
           </select>
@@ -122,15 +123,17 @@ export function UbaPage() {
 
         {/* 2. Risk Score */}
         <MetricCard
-          label="Risk Score"
-          value={`${(selectedEmployee.riskScore * 100).toFixed(0)}%`}
+          label="Threat Score"
+          value={formatThreatScore(selectedEmployee.riskScore)}
           detail={
-            selectedEmployee.riskScore > 0.7
+            selectedEmployee.riskScore > 80
               ? 'Immediate containment advised'
-              : 'Low probability of exfiltration'
+              : selectedEmployee.riskScore > 40
+                ? 'Elevated anomaly monitoring'
+                : 'Low probability of exfiltration'
           }
           icon={
-            selectedEmployee.riskScore > 0.5 ? (
+            selectedEmployee.riskScore > 60 ? (
               <ShieldExclamationIcon className="h-5 w-5 text-rose-600" />
             ) : (
               <ShieldCheckIcon className="h-5 w-5 text-emerald-600" />

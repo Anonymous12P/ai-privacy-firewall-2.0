@@ -73,8 +73,7 @@ def test_missing_required_columns_are_reported_from_header(
 
     assert not result.success
     issue = next(
-        issue for issue in result.errors
-        if issue.code == "missing_required_columns"
+        issue for issue in result.errors if issue.code == "missing_required_columns"
     )
     assert "pc" in issue.message
 

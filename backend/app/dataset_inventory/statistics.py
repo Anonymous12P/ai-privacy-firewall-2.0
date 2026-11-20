@@ -41,9 +41,7 @@ class DatasetStatistics:
         """Initialize statistics with the scanner that produced inventory data."""
         self.scanner = scanner
         self.scratch_dir = (
-            scratch_dir
-            if scratch_dir is not None
-            else get_settings().interim_data_dir
+            scratch_dir if scratch_dir is not None else get_settings().interim_data_dir
         ).expanduser()
 
     def calculate(
@@ -100,9 +98,7 @@ class DatasetStatistics:
                     connection.execute("DELETE FROM row_fingerprints")
                     connection.commit()
                     connection.execute("BEGIN")
-                    results.append(
-                        self._calculate_file(file_record, connection)
-                    )
+                    results.append(self._calculate_file(file_record, connection))
                     connection.commit()
             finally:
                 if connection.in_transaction:
@@ -133,8 +129,7 @@ class DatasetStatistics:
                     f"{file_record.relative_path}"
                 )
             normalized_row = tuple(
-                row[index] if index < len(row) else ""
-                for index in range(len(headers))
+                row[index] if index < len(row) else "" for index in range(len(headers))
             )
             row_count += 1
             fingerprint = hashlib.sha256(
@@ -169,8 +164,7 @@ class DatasetStatistics:
 
         if row_count != file_record.rows:
             raise DatasetFileChangedError(
-                f"CSV row count changed after inventory: "
-                f"{file_record.relative_path}"
+                f"CSV row count changed after inventory: {file_record.relative_path}"
             )
 
         numeric_columns: list[str] = []
@@ -185,12 +179,8 @@ class DatasetStatistics:
             else:
                 categorical_columns.append(header)
 
-        average_row_bytes = (
-            sampled_row_bytes / sampled_rows if sampled_rows else 0
-        )
-        memory_estimate = (
-            sys.getsizeof(headers) + round(average_row_bytes * row_count)
-        )
+        average_row_bytes = sampled_row_bytes / sampled_rows if sampled_rows else 0
+        memory_estimate = sys.getsizeof(headers) + round(average_row_bytes * row_count)
         return FileDatasetStatistics(
             relative_path=file_record.relative_path,
             row_count=row_count,

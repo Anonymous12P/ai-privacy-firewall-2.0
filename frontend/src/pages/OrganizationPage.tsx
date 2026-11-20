@@ -38,6 +38,24 @@ export function OrganizationPage() {
   const [selectedNode, setSelectedNode] = useState<TopologyNode | null>(null)
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeProfile | null>(null)
   const [selectedResource, setSelectedResource] = useState<ResourceProfile | null>(null)
+  const [empSearch, setEmpSearch] = useState('')
+  const [empDeptFilter, setEmpDeptFilter] = useState('ALL')
+
+  const displayedEmployees = EMPLOYEES.filter((emp) => {
+    if (empDeptFilter !== 'ALL' && emp.department !== empDeptFilter) return false
+    if (empSearch.trim()) {
+      const q = empSearch.toLowerCase()
+      if (
+        !emp.name.toLowerCase().includes(q) &&
+        !emp.role.toLowerCase().includes(q) &&
+        !emp.department.toLowerCase().includes(q) &&
+        !emp.id.toLowerCase().includes(q)
+      ) {
+        return false
+      }
+    }
+    return true
+  })
 
   return (
     <div className="space-y-8">
@@ -217,7 +235,7 @@ export function OrganizationPage() {
           {/* Department Breakdown Mini-Grid */}
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
-              Protected Organizational Departments (6)
+              Protected Organizational Departments ({DEPARTMENTS.length})
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {DEPARTMENTS.map((dept) => (
@@ -246,19 +264,41 @@ export function OrganizationPage() {
       {/* Tab 2: Employees & Personnel */}
       {activeTab === 'employees' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-bold text-slate-900">
-                Key Enterprise Personas & Personnel
+                Key Enterprise Personas & Personnel ({displayedEmployees.length} of {EMPLOYEES.length})
               </h2>
               <p className="text-xs text-slate-500">
                 Click any employee to view their zero-trust profile, risk score, behavior timeline, and firewall decisions.
               </p>
             </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                type="text"
+                value={empSearch}
+                onChange={(e) => setEmpSearch(e.target.value)}
+                placeholder="Search personnel..."
+                className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
+              />
+              <select
+                value={empDeptFilter}
+                onChange={(e) => setEmpDeptFilter(e.target.value)}
+                className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 cursor-pointer"
+              >
+                <option value="ALL">All Departments</option>
+                {DEPARTMENTS.map((d) => (
+                  <option key={d.name} value={d.name}>
+                    {d.name} ({d.headcount})
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {EMPLOYEES.map((emp) => (
+            {displayedEmployees.map((emp) => (
               <div
                 key={emp.id}
                 onClick={() => setSelectedEmployee(emp)}

@@ -13,16 +13,18 @@ import { RiskBadge } from '../components/RiskBadge'
 import { DigitalTwinNetwork3D } from '../components/twin/DigitalTwinNetwork3D'
 import { EMPLOYEES } from '../data/organizationData'
 import type { EmployeeProfile } from '../types/organization'
+import { formatThreatScore, getThreatLevel } from '../utils/threatScore'
 
 export function DigitalTwinPage() {
   const [selectedTwin, setSelectedTwin] = useState<EmployeeProfile>(EMPLOYEES[7]!) // Ram Rajurkar by default for active demo
 
+  const rawLevel = getThreatLevel(selectedTwin.riskScore)
   const riskCategory: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' =
-    selectedTwin.riskScore > 0.75
+    rawLevel === 'Critical'
       ? 'CRITICAL'
-      : selectedTwin.riskScore > 0.4
+      : rawLevel === 'High' || rawLevel === 'Elevated'
         ? 'HIGH'
-        : selectedTwin.riskScore > 0.2
+        : rawLevel === 'Medium'
           ? 'MEDIUM'
           : 'LOW'
 
@@ -32,11 +34,11 @@ export function DigitalTwinPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-blue-700">
+            <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">
               BEHAVIORAL DIGITAL PERSONA
             </span>
             <span className="text-xs text-slate-500 font-medium">
-              Privacy Shield Technologies Pvt. Ltd.
+              Enterprise Digital Twin Monitor
             </span>
           </div>
           <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
@@ -80,10 +82,10 @@ export function DigitalTwinPage() {
         {/* Current Threat */}
         <MetricCard
           label="Current Threat Score"
-          value={`${(selectedTwin.riskScore * 100).toFixed(0)}%`}
+          value={formatThreatScore(selectedTwin.riskScore)}
           detail={`Risk Level: ${riskCategory}`}
           icon={
-            selectedTwin.riskScore > 0.5 ? (
+            selectedTwin.riskScore > 60 ? (
               <ShieldExclamationIcon className="h-5 w-5 text-rose-600" />
             ) : (
               <ShieldCheckIcon className="h-5 w-5 text-emerald-600" />

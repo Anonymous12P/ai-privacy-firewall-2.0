@@ -119,9 +119,7 @@ class DatasetProfiler:
 
         for file_path in files:
             if file_path.suffix.casefold() != ".csv":
-                warnings.append(
-                    f"Skipped non-CSV validated file: {file_path.name}"
-                )
+                warnings.append(f"Skipped non-CSV validated file: {file_path.name}")
                 continue
             logger.info("Dataset loaded for profiling: %s", file_path)
             try:
@@ -201,8 +199,7 @@ class DatasetProfiler:
             missing_values=missing_values,
             duplicate_rows=duplicate_rows,
             columns=tuple(
-                state.to_profile(name)
-                for state, name in zip(column_states, headers)
+                state.to_profile(name) for state, name in zip(column_states, headers)
             ),
         )
 

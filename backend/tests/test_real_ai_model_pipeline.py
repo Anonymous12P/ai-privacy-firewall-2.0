@@ -12,6 +12,7 @@ Validates:
 from pathlib import Path
 
 import pytest
+
 from app.api.firewall import get_model_pipeline
 from app.core.config import get_settings
 from app.schemas.firewall import (
@@ -62,7 +63,12 @@ def test_ai_engine_loads_all_four_models(model_dir: Path) -> None:
     """Ensure AI engine detects and successfully loads all 4 trained models."""
     ai = AIEngine(model_directory=model_dir)
     available = ai.available_models()
-    for expected_model in ("LogisticRegression", "DecisionTree", "RandomForest", "XGBoost"):
+    for expected_model in (
+        "LogisticRegression",
+        "DecisionTree",
+        "RandomForest",
+        "XGBoost",
+    ):
         assert expected_model in available
 
 
@@ -146,7 +152,9 @@ def test_real_model_inference_threat_detection(
     assert len(res.explanation.contributing_factors) > 0
 
 
-def test_firewall_decision_threshold_mapping(real_firewall_service: FirewallService) -> None:
+def test_firewall_decision_threshold_mapping(
+    real_firewall_service: FirewallService,
+) -> None:
     """Validate policy engine deterministic threshold mapping from threat scores."""
     policy = real_firewall_service.policy_engine
 
@@ -158,7 +166,9 @@ def test_firewall_decision_threshold_mapping(real_firewall_service: FirewallServ
     assert warn_decision.action == "WARN"
     assert warn_decision.risk_level == "Medium"
 
-    restrict_decision = policy.evaluate(prediction="insider", confidence=0.75, features={})
+    restrict_decision = policy.evaluate(
+        prediction="insider", confidence=0.75, features={}
+    )
     assert restrict_decision.action == "RESTRICT"
     assert restrict_decision.risk_level == "High"
 
@@ -169,14 +179,26 @@ def test_firewall_decision_threshold_mapping(real_firewall_service: FirewallServ
 
 def test_get_model_pipeline_metadata(real_firewall_service: FirewallService) -> None:
     """Validate FirewallService.get_model_pipeline returns real comparison and SHAP metadata."""
-    pipeline_meta: FirewallModelPipelineResponse = real_firewall_service.get_model_pipeline()
+    pipeline_meta: FirewallModelPipelineResponse = (
+        real_firewall_service.get_model_pipeline()
+    )
 
     assert pipeline_meta.status == "LOADED_AND_OPERATIONAL"
-    assert pipeline_meta.champion_model in ("DecisionTree", "RandomForest", "XGBoost", "LogisticRegression")
+    assert pipeline_meta.champion_model in (
+        "DecisionTree",
+        "RandomForest",
+        "XGBoost",
+        "LogisticRegression",
+    )
     assert len(pipeline_meta.models) == 4
 
     model_names = {m.model_name for m in pipeline_meta.models}
-    assert model_names == {"LogisticRegression", "DecisionTree", "RandomForest", "XGBoost"}
+    assert model_names == {
+        "LogisticRegression",
+        "DecisionTree",
+        "RandomForest",
+        "XGBoost",
+    }
 
     # Validate benchmark metric bounds
     for m in pipeline_meta.models:

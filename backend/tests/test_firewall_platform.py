@@ -16,6 +16,7 @@ from collections.abc import Mapping
 from typing import Any
 
 import pytest
+
 from app.api.firewall import (
     enforce_access,
     evaluate_access,
@@ -428,7 +429,9 @@ def test_api_firewall_evaluate_handler(auth_user: UserRecord) -> None:
 
 def test_api_firewall_enforce_blocks_handler(auth_user: UserRecord) -> None:
     mock_ai = MockAIPredictor(prediction="insider", confidence=0.98)
-    service = FirewallService(ai_engine=AIEngine(predictor=mock_ai), enforce_firewall=True)
+    service = FirewallService(
+        ai_engine=AIEngine(predictor=mock_ai), enforce_firewall=True
+    )
 
     req = FirewallEnforceRequest(
         features={"indicator.usb": 1.0, "indicator.file": 1.0},

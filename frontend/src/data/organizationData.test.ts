@@ -11,26 +11,34 @@ import {
 
 describe('Digital Twin Organization Data Integrity', () => {
   it('validates enterprise overview metadata', () => {
-    expect(ENTERPRISE_OVERVIEW.companyName).toBe('Privacy Shield Technologies Pvt. Ltd.')
-    expect(ENTERPRISE_OVERVIEW.employeeCount).toBe(8)
-    expect(ENTERPRISE_OVERVIEW.departmentCount).toBe(6)
+    expect(ENTERPRISE_OVERVIEW.companyName).toBe('AI Privacy Firewall Research Lab')
+    expect(ENTERPRISE_OVERVIEW.employeeCount).toBe(100)
+    expect(ENTERPRISE_OVERVIEW.departmentCount).toBe(13)
     expect(ENTERPRISE_OVERVIEW.securityStatus).toBe('Protected')
     expect(ENTERPRISE_OVERVIEW.complianceStandards).toContain('ISO 27001')
   })
 
-  it('contains the core organizational departments', () => {
+  it('contains the core 13 organizational departments', () => {
     const deptNames = DEPARTMENTS.map((d) => d.name)
-    expect(deptNames).toContain('Security Operations')
+    expect(DEPARTMENTS).toHaveLength(13)
     expect(deptNames).toContain('Engineering')
-    expect(deptNames).toContain('Infrastructure')
+    expect(deptNames).toContain('Security')
+    expect(deptNames).toContain('SOC')
     expect(deptNames).toContain('Threat Intelligence')
-    expect(deptNames).toContain('Data Privacy & Compliance')
-    expect(deptNames).toContain('Identity & Access Management')
+    expect(deptNames).toContain('Compliance')
+    expect(deptNames).toContain('DevOps')
+    expect(deptNames).toContain('Cloud')
+    expect(deptNames).toContain('Infrastructure')
+    expect(deptNames).toContain('AI Research')
+    expect(deptNames).toContain('HR')
+    expect(deptNames).toContain('Finance')
+    expect(deptNames).toContain('Legal')
+    expect(deptNames).toContain('Marketing')
   })
 
-  it('contains strictly the 8 designated enterprise employee personas with full profiles', () => {
+  it('contains 100 enterprise employees including designated personas with valid distribution', () => {
     const employeeNames = EMPLOYEES.map((e) => e.name)
-    expect(employeeNames).toHaveLength(8)
+    expect(employeeNames).toHaveLength(100)
     expect(employeeNames).toEqual(
       expect.arrayContaining([
         'Vikas Rathod',
@@ -43,6 +51,17 @@ describe('Digital Twin Organization Data Integrity', () => {
         'Ram Rajurkar',
       ]),
     )
+
+    // Validate realistic distribution: ~65 Normal, ~20 Warning, ~10 High, ~5 Critical
+    const activeCount = EMPLOYEES.filter((e) => e.status === 'Active').length
+    const watchCount = EMPLOYEES.filter((e) => e.status === 'Under Watch').length
+    const investigatingCount = EMPLOYEES.filter((e) => e.status === 'Investigating').length
+    const suspendedCount = EMPLOYEES.filter((e) => e.status === 'Suspended').length
+
+    expect(activeCount).toBe(65)
+    expect(watchCount).toBe(20)
+    expect(investigatingCount).toBe(10)
+    expect(suspendedCount).toBe(5)
 
     EMPLOYEES.forEach((emp) => {
       expect(emp.id).toBeDefined()
@@ -60,7 +79,7 @@ describe('Digital Twin Organization Data Integrity', () => {
       expect(emp.riskScore).toBeLessThanOrEqual(100)
       expect(emp.behaviorScore).toBeGreaterThanOrEqual(0)
       expect(emp.behaviorScore).toBeLessThanOrEqual(100)
-      expect(['Low', 'Medium', 'High', 'Critical']).toContain(emp.riskLevel)
+      expect(['Low', 'Medium', 'Elevated', 'High', 'Critical']).toContain(emp.riskLevel)
       expect(emp.behaviorTimeline.length).toBeGreaterThan(0)
       expect(emp.recentRequests.length).toBeGreaterThan(0)
       expect(emp.firewallDecisions.allowed).toBeGreaterThanOrEqual(0)

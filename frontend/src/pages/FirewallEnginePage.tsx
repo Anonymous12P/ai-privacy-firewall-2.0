@@ -30,6 +30,7 @@ import { MetricCard } from '../components/MetricCard'
 import { RiskBadge } from '../components/RiskBadge'
 import { EMPLOYEES } from '../data/organizationData'
 import { useFirewallStatus } from '../hooks/useFirewall'
+import { formatThreatScore, getThreatLevel } from '../utils/threatScore'
 
 interface LiveRequestPacket {
   id: string
@@ -271,7 +272,7 @@ export function FirewallEnginePage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <MetricCard
           label="Real-Time Threat Score"
-          value={`${(currentThreatScore * 100).toFixed(0)}%`}
+          value={formatThreatScore(currentThreatScore)}
           detail={
             riskLevel === 'CRITICAL'
               ? 'Critical threshold breached'
@@ -709,19 +710,11 @@ export function FirewallEnginePage() {
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <p className="text-xs font-extrabold font-mono text-slate-900">
-                        Score: {(emp.riskScore * 100).toFixed(0)}%
+                        Score: {formatThreatScore(emp.riskScore)}
                       </p>
                       <p className="text-[10px] text-slate-400">Behavior: {emp.behaviorScore}/100</p>
                     </div>
-                    <RiskBadge
-                      risk={
-                        emp.riskScore > 0.75
-                          ? 'Critical'
-                          : emp.riskScore > 0.4
-                            ? 'High'
-                            : 'Medium'
-                      }
-                    />
+                    <RiskBadge risk={getThreatLevel(emp.riskScore)} />
                   </div>
                 </div>
               ))}
@@ -841,7 +834,7 @@ export function FirewallEnginePage() {
                             : 'text-emerald-600'
                       }`}
                     >
-                      {(req.threatScore * 100).toFixed(0)}%
+                      {formatThreatScore(req.threatScore)}
                     </span>
                   </td>
                   <td className="py-3 px-3 font-mono text-[11px] text-slate-700">

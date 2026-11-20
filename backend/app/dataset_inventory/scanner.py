@@ -50,8 +50,7 @@ class DatasetScanner:
                 if candidate.is_symlink():
                     if candidate.suffix.casefold() == ".csv":
                         raise DatasetDirectoryError(
-                            f"Symbolic-link CSV files are not supported: "
-                            f"{candidate}"
+                            f"Symbolic-link CSV files are not supported: {candidate}"
                         )
                     continue
                 if candidate.is_file() and candidate.suffix.casefold() == ".csv":
@@ -234,10 +233,14 @@ class DatasetScanner:
             if not sample:
                 raise DatasetCSVError(f"CSV file is empty: {file_path}")
             try:
-                return csv.Sniffer().sniff(
-                    sample,
-                    delimiters=SUPPORTED_DELIMITERS,
-                ).delimiter
+                return (
+                    csv.Sniffer()
+                    .sniff(
+                        sample,
+                        delimiters=SUPPORTED_DELIMITERS,
+                    )
+                    .delimiter
+                )
             except csv.Error:
                 return ","
         except UnicodeError as exc:

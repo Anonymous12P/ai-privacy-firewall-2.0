@@ -32,9 +32,7 @@ class MissingValuePolicy(StrictPolicyModel):
 class DuplicatePolicy(StrictPolicyModel):
     """Declare how duplicate rows may be handled in a future cleaning stage."""
 
-    strategy: Literal["report_only", "keep_first", "keep_last", "drop"] = (
-        "report_only"
-    )
+    strategy: Literal["report_only", "keep_first", "keep_last", "drop"] = "report_only"
     subset: tuple[str, ...] = ()
 
 
@@ -67,9 +65,7 @@ class CleaningPolicy(StrictPolicyModel):
 
     name: str = Field(min_length=1)
     version: str = Field(min_length=1)
-    missing_values: MissingValuePolicy = Field(
-        default_factory=MissingValuePolicy
-    )
+    missing_values: MissingValuePolicy = Field(default_factory=MissingValuePolicy)
     duplicates: DuplicatePolicy = Field(default_factory=DuplicatePolicy)
     outliers: OutlierPolicy = Field(default_factory=OutlierPolicy)
     columns: dict[str, ColumnPolicy] = Field(default_factory=dict)

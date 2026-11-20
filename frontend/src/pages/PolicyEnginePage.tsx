@@ -5,6 +5,7 @@ import {
 import { useState } from 'react'
 import { Card } from '../components/Card'
 import { FirewallActionBadge } from '../components/FirewallActionBadge'
+import { formatThreatScore } from '../utils/threatScore'
 
 interface PolicyRule {
   id: string
@@ -101,11 +102,11 @@ export function PolicyEnginePage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-blue-700">
+            <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">
               ZERO TRUST GOVERNANCE
             </span>
             <span className="text-xs text-slate-500 font-medium">
-              Privacy Shield Technologies Pvt. Ltd.
+              Autonomous Arbitration Rules
             </span>
           </div>
           <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
@@ -145,8 +146,8 @@ export function PolicyEnginePage() {
               onChange={(e) => setSimulatedScore(Number(e.target.value))}
               className="w-36 accent-blue-600 cursor-pointer"
             />
-            <span className="font-mono text-xs font-bold text-slate-900 w-12 text-right">
-              {(simulatedScore * 100).toFixed(0)}%
+            <span className="font-mono text-xs font-bold text-slate-900 w-16 text-right">
+              {formatThreatScore(simulatedScore)}
             </span>
           </div>
         </div>
@@ -159,7 +160,7 @@ export function PolicyEnginePage() {
             </span>
             <div className="mt-1 flex items-baseline gap-2">
               <span className="text-3xl font-extrabold text-slate-900">
-                {(evaluatedDecision.threatScore * 100).toFixed(0)}%
+                {formatThreatScore(evaluatedDecision.threatScore)}
               </span>
               <span className="text-xs text-slate-500 font-sans">({evaluatedDecision.threatScore.toFixed(2)})</span>
             </div>
@@ -236,7 +237,7 @@ export function PolicyEnginePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-xs text-slate-500">
-                    Threshold &gt;= {(rule.threatScoreThreshold * 100).toFixed(0)}%
+                    Threshold &gt;= {formatThreatScore(rule.threatScoreThreshold)}
                   </span>
                   <FirewallActionBadge action={rule.decision} />
                 </div>

@@ -4,7 +4,6 @@ import {
   CheckCircleIcon,
   ClockIcon,
   ExclamationTriangleIcon,
-  NoSymbolIcon,
   RadioIcon,
   ShieldCheckIcon,
   SparklesIcon,
@@ -29,6 +28,7 @@ import { MetricCard } from '../components/MetricCard'
 import { RiskBadge } from '../components/RiskBadge'
 import { EMPLOYEES } from '../data/organizationData'
 import { useFirewallAudit } from '../hooks/useFirewall'
+import { formatThreatScore, getThreatLevel } from '../utils/threatScore'
 
 interface LiveFeedItem {
   id: string
@@ -46,34 +46,43 @@ const INITIAL_FEED: LiveFeedItem[] = [
     subject: 'Ram Rajurkar',
     resource: 's3://secure-vault/finance_q3.csv',
     action: 'export_mass_data',
-    threatScore: 0.88,
+    threatScore: 86,
     decision: 'BLOCK',
     timestamp: 'Just now',
   },
   {
     id: 'EVT-502',
-    subject: 'Saurabh Talape',
-    resource: 'gitlab.corp/auth/keycloak-realm.json',
+    subject: 'Himanshu Gond',
+    resource: 'gitlab.internal/core/auth-service.git',
     action: 'git_clone_external',
-    threatScore: 0.45,
+    threatScore: 54,
     decision: 'WARN',
     timestamp: '2 min ago',
   },
   {
     id: 'EVT-503',
-    subject: 'Himanshu Gond',
-    resource: 'feature-store.internal/embeddings',
+    subject: 'Vaibhav Deshmukh',
+    resource: 'compliance.internal/audit_ledger',
     action: 'bulk_query',
-    threatScore: 0.38,
+    threatScore: 26,
     decision: 'ALLOW',
     timestamp: '4 min ago',
   },
   {
     id: 'EVT-504',
+    subject: 'Pavan Jadhav',
+    resource: 'models.internal:5000/weights/shap',
+    action: 'read_model',
+    threatScore: 18,
+    decision: 'ALLOW',
+    timestamp: '6 min ago',
+  },
+  {
+    id: 'EVT-505',
     subject: 'Vikas Rathod',
-    resource: 'k8s-api:6443/namespaces/prod',
+    resource: 'k8s.internal:6443/namespaces/prod',
     action: 'audit_policy_check',
-    threatScore: 0.08,
+    threatScore: 14,
     decision: 'ALLOW',
     timestamp: '7 min ago',
   },
@@ -84,15 +93,15 @@ const THREAT_TREND_DATA = [
   { hour: '04:00', normal: 85, threats: 0, baseline: 90 },
   { hour: '08:00', normal: 340, threats: 3, baseline: 320 },
   { hour: '12:00', normal: 520, threats: 8, baseline: 490 },
-  { hour: '16:00', normal: 480, threats: 12, baseline: 450 },
-  { hour: '20:00', normal: 260, threats: 24, baseline: 220 },
-  { hour: '23:00', normal: 140, threats: 18, baseline: 130 },
+  { hour: '16:00', normal: 480, threats: 10, baseline: 450 },
+  { hour: '20:00', normal: 260, threats: 14, baseline: 220 },
+  { hour: '23:00', normal: 140, threats: 7, baseline: 130 },
 ]
 
 const POLICY_DECISION_DISTRIBUTION = [
-  { name: 'Allow (Normal)', value: 78, color: '#22c55e' },
-  { name: 'Warn (Challenge)', value: 14, color: '#f59e0b' },
-  { name: 'Block (Interception)', value: 8, color: '#ef4444' },
+  { name: 'Allow (Normal)', value: 80, color: '#22c55e' },
+  { name: 'Warn (Challenge)', value: 14, color: '#eab308' },
+  { name: 'Block (Interception)', value: 6, color: '#ef4444' },
 ]
 
 const RECENT_ALERTS = [
@@ -106,25 +115,29 @@ const RECENT_ALERTS = [
   },
   {
     id: 'ALT-102',
-    title: 'Anomalous Geo-IP Split Tunnel',
-    employee: 'Saurabh Talape',
-    risk: 'High',
+    title: 'Off-hours Wire Transfer Export',
+    employee: 'Kavita Rao',
+    risk: 'Critical',
     time: '20:45:12',
-    description: 'Direct IP connection asserted during active WireGuard corporate tunnel.',
+    description: 'Off-hours bulk transaction export initiated from unverified proxy endpoint.',
   },
   {
     id: 'ALT-103',
-    title: 'High Velocity API Query Spike',
+    title: 'Malware Sandbox Detonation Vector',
     employee: 'Himanshu Gond',
-    risk: 'Medium',
+    risk: 'High',
     time: '19:30:22',
-    description: 'Query rate exceeded role profile by 220% on sensitive embedding tables.',
+    description: 'IOC dynamic execution within isolated analysis container with abnormal outbound ping.',
   },
 ]
 
 export function DashboardPage() {
   const { data: auditData } = useFirewallAudit({ pageSize: 10 })
   const [feed, setFeed] = useState<LiveFeedItem[]>(INITIAL_FEED)
+  const [activeUsersCount, setActiveUsersCount] = useState(74)
+  const [threatsTodayCount, setThreatsTodayCount] = useState(8)
+  const [totalDecisionsCount, setTotalDecisionsCount] = useState(14820)
+  const [auditLogsCount, setAuditLogsCount] = useState(2840)
 
   // Map real backend audit logs into live feed if present
   useEffect(() => {
@@ -134,7 +147,7 @@ export function DashboardPage() {
         subject: item.subject_id ?? 'Unknown Subject',
         resource: item.resource ?? 'Protected Resource',
         action: item.action,
-        threatScore: item.risk_score ?? 0.15,
+        threatScore: Math.round(item.risk_score && item.risk_score <= 1.0 ? item.risk_score * 100 : item.risk_score ?? 15),
         decision: (item.decision === 'BLOCK'
           ? 'BLOCK'
           : item.decision === 'WARN'
@@ -146,17 +159,86 @@ export function DashboardPage() {
     }
   }, [auditData])
 
+  // Realistic dynamic simulation ticking every 3 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Small realistic fluctuations
+      setActiveUsersCount((prev) => {
+        const delta = Math.floor(Math.random() * 3) - 1
+        return Math.max(68, Math.min(84, prev + delta))
+      })
+      setTotalDecisionsCount((prev) => prev + Math.floor(1 + Math.random() * 3))
+      setAuditLogsCount((prev) => prev + 1)
+
+      // Randomly inject new live feed items with realistic probability:
+      // ~80% Allow (Normal), ~14% Warn, ~5% Restrict, ~1% Block
+      const rand = Math.random()
+      let subject = 'Pavan Jadhav'
+      let resource = 'api-gateway.internal:443/graphql'
+      let action = 'read'
+      let threatScore = Math.floor(8 + Math.random() * 12)
+      let decision: 'ALLOW' | 'WARN' | 'BLOCK' = 'ALLOW'
+
+      if (rand < 0.02) {
+        // Critical event (~2%)
+        const critUsers = ['Ram Rajurkar', 'Kavita Rao', 'Devendra Joshi']
+        subject = critUsers[Math.floor(Math.random() * critUsers.length)]!
+        resource = 's3://secure-vault/corporate_secrets.enc'
+        action = 'bulk_export'
+        threatScore = Math.floor(84 + Math.random() * 12)
+        decision = 'BLOCK'
+        setThreatsTodayCount((t) => t + 1)
+      } else if (rand < 0.16) {
+        // Warning event (~14%)
+        const warnUsers = ['Himanshu Gond', 'Vaibhav Deshmukh', 'Arjun Verma']
+        subject = warnUsers[Math.floor(Math.random() * warnUsers.length)]!
+        resource = 'postgresql://audit.firewall.internal:5432/audit_trail'
+        action = 'query_high_volume'
+        threatScore = Math.floor(28 + Math.random() * 26)
+        decision = 'WARN'
+      } else {
+        // Normal event (~84%)
+        const normUsers = ['Vikas Rathod', 'Pavan Jadhav', 'Ghanshyam Sapkal', 'Pratik Akkanawaru', 'Saurabh Talape']
+        subject = normUsers[Math.floor(Math.random() * normUsers.length)]!
+        resource = `${subject.split(' ')[0]?.toLowerCase()}-workstation.internal/auth`
+        action = 'session_ping'
+        threatScore = Math.floor(4 + Math.random() * 16)
+        decision = 'ALLOW'
+      }
+
+      const now = new Date()
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+
+      const newEvent: LiveFeedItem = {
+        id: `EVT-${Math.floor(500 + Math.random() * 500)}`,
+        subject,
+        resource,
+        action,
+        threatScore,
+        decision,
+        timestamp: timeStr,
+      }
+
+      setFeed((prev) => [newEvent, ...prev.slice(0, 5)])
+    }, 3000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  // Top watched employees (mix of core and notable statuses)
+  const watchedEmployees = EMPLOYEES.slice(0, 8)
+
   return (
     <div className="space-y-8">
-      {/* Enterprise Header Banner */}
+      {/* Header Banner */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-blue-700 uppercase font-sans">
-              ENTERPRISE SOC CONSOLE
+            <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-indigo-700 uppercase font-sans">
+              AI PRIVACY FIREWALL COMMAND CENTER
             </span>
             <span className="text-xs text-slate-500 font-medium">
-              Privacy Shield Technologies Pvt. Ltd.
+              Enterprise Digital Twin Monitor
             </span>
           </div>
           <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
@@ -167,60 +249,62 @@ export function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs">
-          <RadioIcon className="h-4 w-4 text-emerald-500 animate-pulse" />
-          <span>Real-time Stream: Active</span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs">
+            <RadioIcon className="h-4 w-4 text-emerald-500 animate-pulse" />
+            <span>Live Stream: Active</span>
+          </div>
         </div>
       </div>
 
-      {/* TOP 6 KPI CARDS (Mandatory Requirements) */}
+      {/* TOP 6 KPI CARDS */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
         {/* 1. Protected Employees */}
         <MetricCard
-          label="Protected Employees"
-          value="8 Personnel"
-          detail="100% Endpoints Verified"
-          icon={<UserGroupIcon className="h-5 w-5 text-blue-600" />}
+          label="Total Personnel"
+          value={`${EMPLOYEES.length} Employees`}
+          detail="13 Enterprise Departments"
+          icon={<UserGroupIcon className="h-5 w-5 text-indigo-600" />}
         />
 
-        {/* 2. Threats Today */}
+        {/* 2. Active Sessions */}
+        <MetricCard
+          label="Active Users"
+          value={`${activeUsersCount} Online`}
+          detail="Zero-Trust Enrolled"
+          icon={<CheckCircleIcon className="h-5 w-5 text-emerald-600" />}
+        />
+
+        {/* 3. Threats Today */}
         <MetricCard
           label="Threats Today"
-          value="38 Flagged"
-          detail="+12% from 24h baseline"
+          value={`${threatsTodayCount} Flagged`}
+          detail="Autonomous ML Interceptions"
           icon={<ExclamationTriangleIcon className="h-5 w-5 text-amber-600" />}
         />
 
-        {/* 3. Blocked Attacks */}
+        {/* 4. Critical Alerts */}
         <MetricCard
-          label="Blocked Attacks"
-          value="14 Intercepted"
-          detail="Autonomous TCP Reset"
-          icon={<NoSymbolIcon className="h-5 w-5 text-rose-600" />}
-        />
-
-        {/* 4. High Risk Users */}
-        <MetricCard
-          label="High Risk Users"
-          value="1 Subject"
-          detail="Ram Rajurkar (Score 0.88)"
+          label="Critical Alerts"
+          value="5 Suspended"
+          detail="Score &gt;= 81/100"
           icon={<ShieldCheckIcon className="h-5 w-5 text-rose-600" />}
         />
 
-        {/* 5. Model Accuracy */}
+        {/* 5. Firewall Decisions */}
         <MetricCard
-          label="Model Accuracy"
-          value="97.8%"
-          detail="XGBoost Ensemble"
+          label="Firewall Decisions"
+          value={totalDecisionsCount.toLocaleString()}
+          detail="Continuous ML Inference"
           icon={<SparklesIcon className="h-5 w-5 text-blue-600" />}
         />
 
         {/* 6. Current Threat Level */}
         <MetricCard
-          label="Current Threat Level"
-          value="Elevated"
-          detail="UBA Anomaly detected"
-          icon={<BoltIcon className="h-5 w-5 text-amber-600" />}
+          label="Overall Threat Level"
+          value="Normal"
+          detail="System Defenses Optimal"
+          icon={<BoltIcon className="h-5 w-5 text-emerald-600" />}
         />
       </div>
 
@@ -231,7 +315,7 @@ export function DashboardPage() {
           <Card className="p-6 h-full">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
                   TEMPORAL SURVEILLANCE
                 </span>
                 <h2 className="text-base font-extrabold text-slate-900">
@@ -240,7 +324,7 @@ export function DashboardPage() {
               </div>
               <div className="flex items-center gap-4 text-xs font-medium">
                 <span className="flex items-center gap-1.5 text-slate-600">
-                  <span className="h-2 w-2 rounded-full bg-blue-600" />
+                  <span className="h-2 w-2 rounded-full bg-indigo-600" />
                   Baseline Queries
                 </span>
                 <span className="flex items-center gap-1.5 text-rose-600">
@@ -255,15 +339,15 @@ export function DashboardPage() {
                 <AreaChart data={THREAT_TREND_DATA}>
                   <defs>
                     <linearGradient id="normalWave" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2563eb" stopOpacity={0.15} />
-                      <stop offset="95%" stopColor="#2563eb" stopOpacity={0.0} />
+                      <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.15} />
+                      <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.0} />
                     </linearGradient>
                     <linearGradient id="threatWave" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.35} />
+                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#ef4444" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                   <XAxis dataKey="hour" stroke="#64748b" fontSize={11} />
                   <YAxis stroke="#64748b" fontSize={11} />
                   <Tooltip
@@ -277,18 +361,20 @@ export function DashboardPage() {
                   <Area
                     type="monotone"
                     dataKey="normal"
-                    stroke="#2563eb"
+                    stroke="#4f46e5"
                     strokeWidth={2}
+                    fillOpacity={1}
                     fill="url(#normalWave)"
-                    name="Normal Operations"
+                    name="Normal Requests"
                   />
                   <Area
                     type="monotone"
                     dataKey="threats"
                     stroke="#ef4444"
                     strokeWidth={2}
+                    fillOpacity={1}
                     fill="url(#threatWave)"
-                    name="Threat Events"
+                    name="Threat Incidents"
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -296,51 +382,47 @@ export function DashboardPage() {
           </Card>
         </div>
 
-        {/* Policy Decisions Breakdown */}
+        {/* Policy Decision Distribution Pie */}
         <div className="lg:col-span-4">
           <Card className="p-6 h-full flex flex-col justify-between">
-            <div className="border-b border-slate-100 pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-                GOVERNANCE ARBITRATION
-              </span>
-              <h2 className="text-base font-extrabold text-slate-900">
-                Policy Decisions
-              </h2>
+            <div>
+              <div className="border-b border-slate-100 pb-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
+                  ARBITRATION ENGINE
+                </span>
+                <h2 className="text-base font-extrabold text-slate-900">
+                  Firewall Decision Ratio
+                </h2>
+              </div>
+              <div className="mt-4 h-52 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={POLICY_DECISION_DISTRIBUTION}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={75}
+                      paddingAngle={4}
+                      dataKey="value"
+                    >
+                      {POLICY_DECISION_DISTRIBUTION.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </div>
 
-            <div className="h-44 w-full my-auto">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={POLICY_DECISION_DISTRIBUTION}
-                    innerRadius={46}
-                    outerRadius={68}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {POLICY_DECISION_DISTRIBUTION.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#ffffff',
-                      borderColor: '#e2e8f0',
-                      borderRadius: '10px',
-                      fontSize: '11px',
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="space-y-2 pt-3 border-t border-slate-100">
+            <div className="mt-2 space-y-2 text-xs">
               {POLICY_DECISION_DISTRIBUTION.map((item) => (
-                <div key={item.name} className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
+                <div key={item.name} className="flex items-center justify-between font-medium">
+                  <span className="flex items-center gap-2 text-slate-600">
                     <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                    <span className="font-medium text-slate-700">{item.name}</span>
-                  </div>
+                    {item.name}
+                  </span>
                   <span className="font-mono font-bold text-slate-900">{item.value}%</span>
                 </div>
               ))}
@@ -356,45 +438,46 @@ export function DashboardPage() {
           <Card className="p-6 h-full">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
                   PERSONNEL RISK POSTURE
                 </span>
                 <h2 className="text-base font-extrabold text-slate-900">
-                  Employee Risk Summary (8 Personnel)
+                  Key Monitored Personnel ({EMPLOYEES.length} Total)
                 </h2>
               </div>
               <span className="text-xs font-semibold text-slate-500">Live UBA Baselines</span>
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-              {EMPLOYEES.map((emp) => (
-                <div
-                  key={emp.id}
-                  className="rounded-xl border border-slate-200/90 bg-white p-3 shadow-2xs hover:border-slate-300 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">{emp.name}</p>
-                      <p className="text-[10px] text-slate-500">{emp.department}</p>
+              {watchedEmployees.map((emp) => {
+                const threatLevel = getThreatLevel(emp.riskScore)
+
+                return (
+                  <div
+                    key={emp.id}
+                    className="rounded-xl border border-slate-200 bg-white p-3 shadow-2xs hover:border-slate-300 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <img
+                          src={emp.avatar}
+                          alt={emp.name}
+                          className="h-8 w-8 rounded-lg object-cover ring-1 ring-slate-200"
+                        />
+                        <div>
+                          <p className="text-xs font-bold text-slate-900">{emp.name}</p>
+                          <p className="text-[10px] text-slate-500">{emp.department}</p>
+                        </div>
+                      </div>
+                      <RiskBadge risk={threatLevel} />
                     </div>
-                    <RiskBadge
-                      risk={
-                        emp.riskScore > 0.75
-                          ? 'Critical'
-                          : emp.riskScore > 0.4
-                            ? 'High'
-                            : emp.riskScore > 0.2
-                              ? 'Medium'
-                              : 'Low'
-                      }
-                    />
+                    <div className="mt-2 flex items-center justify-between text-[11px] font-mono text-slate-600 border-t border-slate-100 pt-1.5">
+                      <span>Threat: <strong>{formatThreatScore(emp.riskScore)}</strong></span>
+                      <span>Behavior: <strong>{emp.behaviorScore}/100</strong></span>
+                    </div>
                   </div>
-                  <div className="mt-2 flex items-center justify-between text-[11px] font-mono text-slate-600 border-t border-slate-100 pt-1.5">
-                    <span>Threat: {(emp.riskScore * 100).toFixed(0)}%</span>
-                    <span>Behavior: {emp.behaviorScore}/100</span>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </Card>
         </div>
@@ -418,7 +501,7 @@ export function DashboardPage() {
               {RECENT_ALERTS.map((alert) => (
                 <div
                   key={alert.id}
-                  className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-3.5 space-y-1 hover:bg-slate-50 transition-colors"
+                  className="rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 space-y-1 hover:bg-slate-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-slate-900">{alert.title}</span>
@@ -443,8 +526,8 @@ export function DashboardPage() {
           <Card className="p-6">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-                  TELEMETRY EVENTS
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
+                  TELEMETRY EVENTS STREAM
                 </span>
                 <h2 className="text-base font-extrabold text-slate-900">
                   Live Feed (Streaming Interceptions)
@@ -467,7 +550,7 @@ export function DashboardPage() {
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="font-mono text-xs font-bold text-slate-700">
-                      {(item.threatScore * 100).toFixed(0)}%
+                      {formatThreatScore(item.threatScore)}
                     </span>
                     <FirewallActionBadge action={item.decision} />
                   </div>
@@ -482,7 +565,7 @@ export function DashboardPage() {
           {/* AI Prediction Summary */}
           <Card className="p-6">
             <div className="border-b border-slate-100 pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
                 MODEL CONSENSUS
               </span>
               <h2 className="text-base font-extrabold text-slate-900">
@@ -500,7 +583,7 @@ export function DashboardPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-600">Inference Response Time:</span>
-                <span className="font-mono font-bold text-blue-600">1.2 ms</span>
+                <span className="font-mono font-bold text-indigo-600">1.2 ms</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-600">False Positive Rate:</span>
@@ -530,16 +613,16 @@ export function DashboardPage() {
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 text-slate-700">
                   <CheckCircleIcon className="h-4 w-4 text-emerald-500" />
-                  PostgreSQL / SQLite Database
+                  Audit Trail & Feature Store
                 </span>
-                <span className="font-bold text-emerald-600">HEALTHY</span>
+                <span className="font-bold text-emerald-600">HEALTHY ({auditLogsCount.toLocaleString()} logs)</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 text-slate-700">
                   <CheckCircleIcon className="h-4 w-4 text-emerald-500" />
                   Autonomous Zero Trust Enforcement
                 </span>
-                <span className="font-bold text-blue-600">ACTIVE</span>
+                <span className="font-bold text-indigo-600">ACTIVE</span>
               </div>
             </div>
           </Card>
